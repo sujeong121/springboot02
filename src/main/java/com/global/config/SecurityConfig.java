@@ -54,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     jdbcTokenRepository.setDataSource(dataSource);
     return jdbcTokenRepository;
   }
+
   @Override
   public void configure(WebSecurity web) throws Exception {
     // resource/static 에 있는 data 는 Spring Security 로 설정하지 않는 설정
