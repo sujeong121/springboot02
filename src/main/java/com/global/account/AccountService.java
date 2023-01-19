@@ -80,7 +80,25 @@ public class AccountService implements UserDetailsService {
   }
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return null;
+  public UserDetails loadUserByUsername(String emailOrNickName) throws UsernameNotFoundException {
+    // findByEmail() 로 email 로 로그인하는지 알아보기
+    Account account = accountRepository.findByEmail(emailOrNickName);
+    // 이메일로 로그인하는 게 아니면
+    // findByNickName() 로 nickName 로 로그인하는지 알아보기
+    if(account == null){
+      account = accountRepository.findByNickName(emailOrNickName);
+    }
+
+    // nickName 으로도 로그인하는 것이 아니라면
+    // UsernameNotFoundException 예외를 발생시킴
+    //  ㄴ email 또는 password 가 잘못되었다고 return 함
+    if(account == null){
+      throw new UsernameNotFoundException(emailOrNickName);
+    }
+
+    // 현재 입력한 email 이나 nickName 에 해당하는 user 가 있는 경우
+    //  ㄴ Principal 에 해당하는 객체를 넘김
+    //       ㄴ Spring Security 가 제공하는 User 상속하는 UserAccount 객체
+    return new UserAccount(account);
   }
 }
