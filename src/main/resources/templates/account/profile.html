@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+  <nav th:replace="fragments.html :: main-nav"></nav>
+
+  <div class="container">
+    <div class="row mt-5 justify-content-center">
+      <div class="col-2">
+        <!-- profile image 와 avata-->
+        <!-- profile image 가 없으면 jdenticon(avata) 를 보여주고 -->
+        <svg th:if="${#strings.isEmpty(account.profileImage)}" class="img-float-left float-left rounded img-thumbnail"
+        th:data-jdenticon-value="${account.nickName}" width="125" height="125"></svg>
+        <!-- profile image 가 있으면 profileImage 를 보여줌 -->
+        <img th:if="${!#strings.isEmpty(account.profileImage)}" class="img-float-left float-left rounded img-thumbnail"
+             th:src="${account.profileImage}" width="125" height="125" />
+      </div>
+      <div class="col-8">
+        <h1 class="display-4" th:text="${account.nickName}">globalIT</h1>
+        <!-- bio 가 있으면 bio 보여주고 -->
+        <p class="lead" th:if="${!#strings.isEmpty(account.bio)}" th:text="${account.bio}">bio</p>
+        <!-- bio 가 없고 current user 인 경우에는 한 줄 소개를 작성해 주세요 라는 메세지를 보여줌 -->
+        <p class="lead" th:if="${#strings.isEmpty(account.bio) && isCurrentUser}">
+          한 줄 소개를 작성해 주세요.
+        </p>
+      </div>
+
+      <div class="row mt-3 justify-content-center">
+        <div class="col-2">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-intro-tab" data-toggle="pill" href="#v-pills-profile"
+               role="tab" aria-controls="v-pills-profile" aria-selected="true">소개</a>
+            <a class="nav-link" id="v-pills-study-tab" data-toggle="pill" href="#v-pills-study"
+               role="tab" aria-controls="v-pills-study" aria-selected="false">스터디</a>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="tab-content" id="v-pills-tabContent">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+              <p th:if="${!#strings.isEmpty(account.url)}">
+                <span style="...">
+                  <i class="fa fa-link col-1"></i>
+                </span>
+                <span th:text="${account.url}" class="col-11"></span>
+              </p>
+              <p th:if="${!#strings.isEmpty(account.occupation)}">
+                <span style="...">
+                  <i class="fa fa-briefcase col-1"></i>
+                </span>
+                <span th:text="${account.occupation}" class="col-9"></span>
+              </p>
+              <p th:if="${!#strings.isEmpty(account.location)}">
+                <span style="...">
+                  <i class="fa fa-location-arrow col-1"></i>
+                </span>
+                <span th:text="${account.location}" class="col-9"></span>
+              </p>
+              <p th:if="${isCurrentUser}">
+                <span style="font-size: 20px;">
+                  <i class="fa fa-envelope-o col-1"></i>
+                </span>
+                <span th:text="${account.email}" class="col-9"></span>
+              </p>
+              <p th:if="${isCurrentUser || account.emailVerified}">
+                <span style="...">
+                  <i class="fa fa-calender-o col-1"></i>
+                </span>
+                <span th:if="${isCurrentUser && !account.emailVerified}" class="col-9">
+                  <a href="#" th:href="@{'/checkout-email?email=' + ${account.email}}">가입을 완료하시려면 이메일을 확인해 주세요.</a>
+                </span>
+                <span th:text="${#temporals.format(account.joinedAt, 'yyyy년 M월 가입')}" class="col-9"></span>
+              </p>
+            </div>
+            <div class="tab-pane fade" id="v-pills-study" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+              Study
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

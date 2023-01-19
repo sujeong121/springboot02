@@ -81,8 +81,8 @@ class MainControllerTest {
     //   ㄴ UserAccount 클래스의 생성자에서 겟닉네임 설정해서임
     //        username 부분을 nickName 으로 반환했음
     mockMvc.perform(post("/login")
-            .param("name", "globaltest@gmail.com")
-            .param("pw", "12345678")
+            .param("username", "globaltest@gmail.com")
+            .param("password", "12345678")
             .with(csrf()))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/"))
@@ -106,8 +106,8 @@ class MainControllerTest {
     //   ㄴ UserAccount 클래스의 생성자에서 겟닉네임 설정해서임
     //        username 부분을 nickName 으로 반환했음
     mockMvc.perform(post("/login")
-                    .param("name", "globaltest")
-                    .param("pw", "12345678")
+                    .param("username", "globaltest")
+                    .param("password", "12345678")
                     .with(csrf()))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/"))
@@ -132,8 +132,8 @@ class MainControllerTest {
     //        username 부분을 nickName 으로 반환했음
     // 실패하는 경우 redirect 가 /login?error 로 되도록 함
     mockMvc.perform(post("/login")
-                    .param("name", "11112222333")
-                    .param("pw", "00000000")
+                    .param("username", "11112222333")
+                    .param("password", "00000000")
                     .with(csrf()))
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/login?error"))

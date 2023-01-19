@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -144,9 +145,28 @@ public class AccountController {
     }
      // 인증 메일을 1 시간 이내에 전송한 이력이 없다면 전송하고 첫 페이지로 이동함
      accountService.sendSignUpConfirmEmail(account);
-
-
      return "redirect:/";
+  }
+
+  @GetMapping("/profile/{nickName}")
+  public String viewProfile(@PathVariable String nickName,
+                            @CurrentUser Account account, Model model){
+
+    Account byNickName = accountRepository.findByNickName(nickName);
+    // nickName 이 들어오지 않은 경우
+    if (nickName == null){
+      throw new IllegalArgumentException(nickName + "에 해당하는 회원이 없습니다");
+    }
+    // nickName 이 들어온 경우 < -- byNickName 을 메모리에 올려서
+    //                              return 에서 지정한 html 페이지에서 사용할 수 있도록 함
+    // model.addAttribute() 에 addAttributeValue 만 지정하면,
+    // addAttributeName(변수) 이름은 byNickName 에 들어가는 객체 type 의 camel case 로 사용
+    //                                                       ㄴ Account <-- account
+    model.addAttribute(byNickName);
+    // model.addAttribute("account", byNickName);
+    model.addAttribute("isCurrentUser", byNickName.equals(account));
+
+    return "account/profile";
   }
 
 }
