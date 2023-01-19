@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
+import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.unauthenticated;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -96,7 +97,7 @@ class MainControllerTest {
 
     // post 방식으로 로그인 요청 보내면
     // Spring Security 가 로그인 처리 해 줌
-    // 이메일 로그인
+    // 닉네임 로그인
     // Spring Security 사용하면, csrf 라는 processor 이 활성화되어 있음
     // .with(csrf) <-- csrf token 을 같이 전송
     // .andExpect(authenticated().withUsername("globaltest"))
@@ -111,5 +112,45 @@ class MainControllerTest {
             .andExpect(status().is3xxRedirection())
             .andExpect(redirectedUrl("/"))
             .andExpect(authenticated().withUsername("globaltest"));
+  }
+
+  @DisplayName("로그인 실패 테스트")
+  @Test
+  void login_fail() throws Exception{
+
+    /* @BeforeEach 에서 실행 */
+
+    // post 방식으로 로그인 요청 보내면
+    // Spring Security 가 로그인 처리 해 줌
+    // 로그인 실패를 테스트하려고
+    // Spring Security 사용하면, csrf 라는 processor 이 활성화되어 있음
+    // .with(csrf) <-- csrf token 을 같이 전송
+    // .andExpect(authenticated().withUsername("globaltest"))
+    //   ㄴ globaltest 라는 username(nickName) 으로 인증됨
+    // 이메일이 아니라, nickName 으로 인증
+    //   ㄴ UserAccount 클래스의 생성자에서 겟닉네임 설정해서임
+    //        username 부분을 nickName 으로 반환했음
+    // 실패하는 경우 redirect 가 /login?error 로 되도록 함
+    mockMvc.perform(post("/login")
+                    .param("name", "11112222333")
+                    .param("pw", "00000000")
+                    .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/login?error"))
+            .andExpect(unauthenticated());
+  }
+
+  @DisplayName("로그아웃 테스트")
+  @Test
+  void logout() throws Exception{
+
+    /* @BeforeEach 에서 실행 */
+    mockMvc.perform(post("/logout")
+                    .param("name", "11112222333")
+                    .param("pw", "00000000")
+                    .with(csrf()))
+            .andExpect(status().is3xxRedirection())
+            .andExpect(redirectedUrl("/"))
+            .andExpect(unauthenticated());
   }
 }
