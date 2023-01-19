@@ -81,6 +81,7 @@ public class AccountController {
   }
 
   // String token  <-- 가입하면서 받아온 token
+  // 인증 메일 처리하는 부분
   @GetMapping("/check-email-token")
   public String checkEmailToken(String token, String email, Model model){
     // 가입자가 입력한 이메일이 정상적으로 등록되었는지 확인하기
@@ -107,8 +108,19 @@ public class AccountController {
       return view;
     }
 
-    account.completeSignUp();
-    accountService.login(account);
+
+    // 위의 검증을 거친 후 처리하는 부분
+    // - Entity 객체 변경은 반드시 Transaction 안에서 해야 함
+    //     ㄴ Transaction 종료 직전이나 필요한 시점에 변경 사항을 DB 에 반영할 수 있기 때문
+    //
+    //
+    accountService.completeSignUp(account);
+    /*
+      completeSignUp() 메소드로 옮김
+      account.completeSignUp();
+      accountService.login(account);
+    */
+
     /*
     아래 code 를 Account 클래스의 completeSignUp() 메소드로 옮기기
 

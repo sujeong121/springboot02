@@ -20,8 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.el.ELContext;
 import javax.validation.Valid;
 import java.util.List;
-
+// @Transactional : AccountService 클래스의 모든 메소드 작업이
+//                  Transaction 안에서 진행되도록 설정함
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AccountService implements UserDetailsService {
   private final AccountRepository accountRepository;
@@ -29,7 +31,6 @@ public class AccountService implements UserDetailsService {
   private final PasswordEncoder passwordEncoder;
   // private final AuthenticationManager authenticationManager;
 
-  @Transactional
   public Account processNewAccount(SignUpForm signUpForm) {
     Account newAccount = saveNewAccount(signUpForm);
     // 이메일 보내기 전에 토큰값 생성하기
@@ -79,6 +80,8 @@ public class AccountService implements UserDetailsService {
     context.setAuthentication(token);
   }
 
+  // readOnly = true : data 를 변경하는 것이 아니고, 로그인 할 때 확인만 함
+  @Transactional(readOnly = true)
   @Override
   public UserDetails loadUserByUsername(String emailOrNickName) throws UsernameNotFoundException {
     // findByEmail() 로 email 로 로그인하는지 알아보기
@@ -100,5 +103,13 @@ public class AccountService implements UserDetailsService {
     //  ㄴ Principal 에 해당하는 객체를 넘김
     //       ㄴ Spring Security 가 제공하는 User 상속하는 UserAccount 객체
     return new UserAccount(account);
+  }
+
+  // - Entity 객체 변경은 반드시 Transaction 안에서 해야 함
+  //     ㄴ Transaction 종료 직전이나 필요한 시점에 변경 사항을 DB 에 반영할 수 있기 때문
+  // 데이터를 변경하는 작업을 함
+  public void completeSignUp(Account account) {
+    account.completeSignUp();
+    login(account);
   }
 }

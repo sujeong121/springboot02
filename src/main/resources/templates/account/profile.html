@@ -64,7 +64,7 @@
               </p>
               <p th:if="${isCurrentUser || account.emailVerified}">
                 <span style="...">
-                  <i class="fa fa-calender-o col-1"></i>
+                  <i class="fa fa-calendar-o col-1"></i>
                 </span>
                 <span th:if="${isCurrentUser && !account.emailVerified}" class="col-9">
                   <a href="#" th:href="@{'/checkout-email?email=' + ${account.email}}">가입을 완료하시려면 이메일을 확인해 주세요.</a>
