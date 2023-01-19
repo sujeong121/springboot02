@@ -24,6 +24,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // permitAll()  <-- 로그인 안 한 상태에서나 로그인한 상태에서 모두 접근 가능함
     http.formLogin()
+        .usernameParameter("name")
+        .passwordParameter("pw")
         .loginPage("/login").permitAll();
 
     // logoutSuccessUrl("/") <-- 로그아웃 하면 첫 페이지로 이동함
