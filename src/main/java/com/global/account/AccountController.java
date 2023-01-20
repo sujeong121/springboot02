@@ -114,6 +114,8 @@ public class AccountController {
     //     ㄴ Transaction 종료 직전이나 필요한 시점에 변경 사항을 DB 에 반영할 수 있기 때문
     //
     //
+    //
+    //
     accountService.completeSignUp(account);
     /*
       completeSignUp() 메소드로 옮김

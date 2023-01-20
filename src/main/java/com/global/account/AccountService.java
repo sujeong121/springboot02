@@ -1,6 +1,7 @@
 package com.global.account;
 
 import com.global.domain.Account;
+import com.global.settings.Profile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -111,5 +112,20 @@ public class AccountService implements UserDetailsService {
   public void completeSignUp(Account account) {
     account.completeSignUp();
     login(account);
+  }
+
+  public void updateProfile(Account account, Profile profile) {
+    // account 의 정보 변경
+    //
+    //
+    //
+    //
+    account.setBio(profile.getBio());
+    account.setUrl(profile.getUrl());
+    account.setOccupation(profile.getOccupation());
+    account.setLocation(profile.getLocation());
+
+    // account 객체의 멤버변수 값이 변경된 것을 DB 에도 반영
+    accountRepository.save(account);
   }
 }

@@ -72,7 +72,13 @@
               </span>
             <span th:text="${#temporals.format(account.joinedAt, 'yyyy년 M월 가입')}" class="col-9"></span>
           </p>
+
+          <p th:if="${isCurrentUser}">
+            <a class="btn btn-outline-primary" href="#" th:href="@{/settings/profile}">프로필 수정</a>
+          </p>
+
         </div>
+
         <div class="tab-pane fade" id="v-pills-study" role="tabpanel" aria-labelledby="v-pills-profile-tab">
           Study
         </div>
