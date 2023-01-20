@@ -61,6 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // resource/static/images 폴더에 있는 image 를 보이게 함
     web.ignoring()
        .mvcMatchers("/node_modules/**")
+       .antMatchers("/favicon.ico", "/resources/**", "/error")
        .requestMatchers(PathRequest.toStaticResources().atCommonLocations());
   }
 }
