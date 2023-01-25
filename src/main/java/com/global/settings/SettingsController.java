@@ -10,6 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -31,8 +32,8 @@ import javax.validation.Valid;
 public class SettingsController {
 
   // settings/profile 문자열을 static 변수에 저장
-  private static final String SETTINGS_PROFILE_VIEW = "settings/profile";
-  private static final String SETTINGS_PROFILE_URL = "/settings/profile";
+  static final String SETTINGS_PROFILE_VIEW = "settings/profile";
+  static final String SETTINGS_PROFILE_URL = "/settings/profile";
 
   //
   private final AccountService accountService;
@@ -66,7 +67,8 @@ public class SettingsController {
   @PostMapping("settings/profile")
   public String updateProfile(@CurrentUser Account account,
                               @Valid @ModelAttribute Profile profile,
-                              Errors errors, Model model){
+                              Errors errors, Model model, RedirectAttributes redirectAttributes){
+
 
 
     // error 가 있는 경우 (Validation 위반)
@@ -83,6 +85,7 @@ public class SettingsController {
     // Transaction 안에서 수정해야
     // DB 에 반영됨  <-- @Transaction
     accountService.updateProfile(account, profile);
+    redirectAttributes.addFlashAttribute("message", "프로필이 수정되었습니다.");
 
     //
     return "redirect:" + SETTINGS_PROFILE_URL;

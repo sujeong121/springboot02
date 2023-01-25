@@ -54,12 +54,18 @@
       <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
         <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false">
+          <!-- account?. : user 가 null 이 아닌 경우를 의미함 -->
+          <!-- profileImage 가 없으면 jdenticon 을 보여주고 -->
+          <svg th:if="${#strings.isEmpty(account?.profileImage)}" data-jdenticon-value="user127"
+               th:data-jdenticon-value="${#authentication.name}" width="24" height="24" />
+          <!-- profileImage 가 있으면 profileImage 보여줌 -->
+          <img th:if="${!#strings.isEmpty(account?.profileImage)}" th:src="${account.profileImage}"
+               width="24" height="24" class="rounded border"/>
+
           <!--
-          <svg th:if="${#strings.idEmpty(account?.profile?.profileImage)}" data-jdenticon-value="user127" th:data-jdenticon-value="${authentication.name}" width="24" height="24" />
-          <img th:if="${#strings.idEmpty(account?.profile?.profileImage)}" th:src="${account?.profile?.profileImage}" width="24" height="24" class="rounded border"/>
-          -->
           <svg width="24" height="24" data-jdenticon-value="user127"
                th:data-jdenticon-value="${#authentication.name}" class="rounded border bg-light"></svg>
+               -->
         </a>
         <div class="dropdown-menu dropdown-menu-sm-right" aria-labelledby="userDropDown">
           <h6 class="dropdown-header">

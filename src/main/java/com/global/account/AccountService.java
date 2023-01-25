@@ -125,6 +125,9 @@ public class AccountService implements UserDetailsService {
     account.setOccupation(profile.getOccupation());
     account.setLocation(profile.getLocation());
 
+    // 프로필 사진 업데이트 처리 : 이미지를 가져와서 넣어줌
+    account.setProfileImage(profile.getProfileImage());
+
     // account 객체의 멤버변수 값이 변경된 것을 DB 에도 반영
     accountRepository.save(account);
   }
