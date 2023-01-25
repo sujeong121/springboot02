@@ -4,6 +4,7 @@ import com.global.account.AccountService;
 import com.global.account.CurrentUser;
 import com.global.domain.Account;
 import lombok.RequiredArgsConstructor;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -46,6 +47,9 @@ public class SettingsController {
   // settings/profile 문자열을 static 변수에 저장
   static final String SETTINGS_PROFILE_VIEW = "settings/profile";
   static final String SETTINGS_PROFILE_URL = "/settings/profile";
+
+  static final String SETTINGS_NOTIFICATIONS_VIEW = "settings/notifications";
+  static final String SETTINGS_NOTIFICATIONS_URL = "/settings/notifications";
 
   //
   private final AccountService accountService;
@@ -129,5 +133,26 @@ public class SettingsController {
     redirectAttributes.addFlashAttribute("message", "비밀번호를 수정했습니다.");
 
     return "redirect:" + SETTINGS_PASSWORD_URL;
+  }
+
+  @GetMapping(SETTINGS_NOTIFICATIONS_URL)
+  public String updateNotificationsForm(@CurrentUser Account account, Model model){
+    model.addAttribute(account);
+    model.addAttribute(new Notifications(account));
+    return SETTINGS_NOTIFICATIONS_VIEW;
+  }
+  @PostMapping(SETTINGS_NOTIFICATIONS_URL)
+  public String updateNotifications(@CurrentUser Account account,
+                                    @Valid Notifications notifications,
+                                    Errors errors, Model model,
+                                    RedirectAttributes redirectAttributes){
+    if(errors.hasErrors()){
+      model.addAttribute(account);
+      return SETTINGS_NOTIFICATIONS_VIEW;
+    }
+
+    accountService.updateNotifications(account, notifications);
+    redirectAttributes.addFlashAttribute("message", "알림 설정이 변경되었습니다.");
+    return "redirect:" + SETTINGS_NOTIFICATIONS_URL;
   }
 }

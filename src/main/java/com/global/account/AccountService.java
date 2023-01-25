@@ -1,8 +1,10 @@
 package com.global.account;
 
 import com.global.domain.Account;
+import com.global.settings.Notifications;
 import com.global.settings.Profile;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,6 +34,8 @@ public class AccountService implements UserDetailsService {
   private final PasswordEncoder passwordEncoder;
   // private final AuthenticationManager authenticationManager;
 
+  private final ModelMapper modelMapper;
+
   public Account processNewAccount(SignUpForm signUpForm) {
     Account newAccount = saveNewAccount(signUpForm);
     // 이메일 보내기 전에 토큰값 생성하기
@@ -45,9 +49,9 @@ public class AccountService implements UserDetailsService {
       .email(signUpForm.getEmail())
       .nickName(signUpForm.getNickName())
       .password(passwordEncoder.encode(signUpForm.getPassword()))
-      .studyCreateByWeb(true)
+      .studyCreatedByWeb(true)
       .studyEnrollmentResultByWeb(true)
-      .studyUpdateByWeb(true)
+      .studyUpdatedByWeb(true)
       .build();
 
     Account newAccount = accountRepository.save(account);
@@ -120,10 +124,11 @@ public class AccountService implements UserDetailsService {
     //
     //
     //
-    account.setBio(profile.getBio());
-    account.setUrl(profile.getUrl());
-    account.setOccupation(profile.getOccupation());
-    account.setLocation(profile.getLocation());
+    modelMapper.map(profile, account);
+    // account.setBio(profile.getBio());
+    // account.setUrl(profile.getUrl());
+    // account.setOccupation(profile.getOccupation());
+    // account.setLocation(profile.getLocation());
 
     // 프로필 사진 업데이트 처리 : 이미지를 가져와서 넣어줌
     account.setProfileImage(profile.getProfileImage());
@@ -140,6 +145,19 @@ public class AccountService implements UserDetailsService {
     //
     account.setPassword(passwordEncoder.encode(newPassword));
     // 명시적으로 merge
+    accountRepository.save(account);
+  }
+
+  public void updateNotifications(Account account, Notifications notifications) {
+    modelMapper.map(notifications, account);
+    /*
+    account.setStudyUpdatedByEmail(notifications.isStudyCreatedByEmail());
+    account.setStudyUpdatedByEmail(notifications.isStudyCreatedByWeb());
+    account.setStudyUpdatedByEmail(notifications.isStudyEnrollmentResultByEmail());
+    account.setStudyUpdatedByEmail(notifications.isStudyEnrollmentResultByWeb());
+    account.setStudyUpdatedByEmail(notifications.isStudyUpdatedByEmail());
+    account.setStudyUpdatedByEmail(notifications.isStudyUpdatedByWeb());
+     */
     accountRepository.save(account);
   }
 }
