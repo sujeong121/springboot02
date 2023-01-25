@@ -131,4 +131,15 @@ public class AccountService implements UserDetailsService {
     // account 객체의 멤버변수 값이 변경된 것을 DB 에도 반영
     accountRepository.save(account);
   }
+
+  // SettingsController 의 public updatePassword() 메소드에서 호출
+  public void updatePassword(Account account, String newPassword) {
+    // account 의 비밀번호를 새로운 비밀번호로 변경
+    //
+    //
+    //
+    account.setPassword(passwordEncoder.encode(newPassword));
+    // 명시적으로 merge
+    accountRepository.save(account);
+  }
 }

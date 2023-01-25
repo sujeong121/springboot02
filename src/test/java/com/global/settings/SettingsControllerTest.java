@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,6 +31,9 @@ class SettingsControllerTest {
 
   @Autowired
   AccountRepository accountRepository;
+
+  @Autowired
+  PasswordEncoder passwordEncoder;
 
   @BeforeEach
   void beforeEach(){
@@ -97,9 +101,9 @@ class SettingsControllerTest {
   @DisplayName("프로필 수정 테스트 - 입력값에 오류가 있는 경우")
   @Test
   void updateProfile_error() throws Exception{
-    String bio = "자기소개를 35자가 넘게 길게 입력한 경우에는 오류가 발생하도록 Profile";
+    String bio = "자기소개를 35자가 넘게 길게 입력한 경우에는 오류가 발생하도록 Profile 클래스에 @Length(max=35) 라고 설정해 놓았음";
     mockMvc.perform(post(SettingsController.SETTINGS_PROFILE_URL)
-                    .param("bio",bio)
+                    .param("bio", bio)
                     .with(csrf()))
             .andExpect(status().isOk())
             .andExpect(view().name(SettingsController.SETTINGS_PROFILE_VIEW))
@@ -109,5 +113,37 @@ class SettingsControllerTest {
 
     Account global = accountRepository.findByNickName("global");
     assertNull(global.getBio());
+  }
+
+  @WithAccount("global")
+  @DisplayName("비밀번호 수정 테스트 - 입력값 정상")
+  @Test
+  void updatePassword_success() throws Exception{
+   mockMvc.perform(post(SettingsController.SETTINGS_PASSWORD_URL)
+           .param("newPassword", "12345678")
+           .param("newPasswordConfirm", "12345678")
+           .with(csrf()))
+           .andExpect(status().is3xxRedirection())
+           .andExpect(redirectedUrl(SettingsController.SETTINGS_PASSWORD_URL))
+           .andExpect(flash().attributeExists("message"));
+
+   Account global = accountRepository.findByNickName("global");
+   // passwordEncoder 주입 받아서 비밀번호 일치하는지 확인
+   assertTrue(passwordEncoder.matches("12345678", global.getPassword()));
+  }
+
+  @WithAccount("global")
+  @DisplayName("비밀번호 수정 테스트 - 비밀번호 일치하지 않는 경우")
+  @Test
+  void updatePassword_fail() throws Exception{
+    mockMvc.perform(post(SettingsController.SETTINGS_PASSWORD_URL)
+            .param("newPassword", "12345678")
+            .param("newPasswordConfirm", "00000000")
+            .with(csrf()))
+            .andExpect(status().isOk())
+            .andExpect(view().name(SettingsController.SETTINGS_PASSWORD_VIEW))
+            .andExpect(model().hasErrors())
+            .andExpect(model().attributeExists("passwordForm"))
+            .andExpect(model().attributeExists("account"));
   }
 }
