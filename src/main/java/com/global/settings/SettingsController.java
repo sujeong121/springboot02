@@ -5,6 +5,7 @@ import com.global.account.CurrentUser;
 import com.global.domain.Account;
 import lombok.RequiredArgsConstructor;
 import org.checkerframework.checker.units.qual.C;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -33,9 +34,22 @@ import javax.validation.Valid;
 @Controller
 @RequiredArgsConstructor
 public class SettingsController {
+  // settings/profile 문자열을 static 변수에 저장
+  static final String SETTINGS_PROFILE_VIEW = "settings/profile";
+  static final String SETTINGS_PROFILE_URL = "/settings/profile";
 
   static final String SETTINGS_PASSWORD_VIEW = "settings/password";
   static final String SETTINGS_PASSWORD_URL = "/settings/password";
+
+  static final String SETTINGS_NOTIFICATIONS_VIEW = "settings/notifications";
+  static final String SETTINGS_NOTIFICATIONS_URL = "/settings/notifications";
+
+  // Service type 의 멤버변수 선언
+  private final AccountService accountService;
+
+  // SettingsController 에서 ModelMapper 설정하기
+  // @RequiredArgsConstructor 에 의해서 Spring 으로부터 주입 받기
+  private final ModelMapper modelMapper;
 
   // PasswordFormValidator 를 Bean 으로 등록하지 않고
   // initBinder 를 사용해서 객체를 생성
@@ -43,16 +57,6 @@ public class SettingsController {
   public void initBinder(WebDataBinder webDataBinder){
     webDataBinder.addValidators(new PasswordFormValidator());
   }
-
-  // settings/profile 문자열을 static 변수에 저장
-  static final String SETTINGS_PROFILE_VIEW = "settings/profile";
-  static final String SETTINGS_PROFILE_URL = "/settings/profile";
-
-  static final String SETTINGS_NOTIFICATIONS_VIEW = "settings/notifications";
-  static final String SETTINGS_NOTIFICATIONS_URL = "/settings/notifications";
-
-  //
-  private final AccountService accountService;
 
   // 주소표시줄에 /settings/profile 요청이 들어오면
   // 자동으로 호출되는 메소드
@@ -63,7 +67,10 @@ public class SettingsController {
     // model.addAttribute("account", account); 아래코드랑 같은 기능
     model.addAttribute(account);
     // model.addAttribute("profile", new Profile(account));
-    model.addAttribute(new Profile(account));
+    // model.addAttribute(new Profile(account));
+    //  ㄴ Profile 클래스에 매개변수 있는 생성자가 없어서 오류 발생
+    //    ㄴ ModelMapper 로 처리함
+    model.addAttribute(modelMapper.map(account, Profile.class));
 
     return SETTINGS_PROFILE_VIEW;
   }
@@ -138,9 +145,11 @@ public class SettingsController {
   @GetMapping(SETTINGS_NOTIFICATIONS_URL)
   public String updateNotificationsForm(@CurrentUser Account account, Model model){
     model.addAttribute(account);
-    model.addAttribute(new Notifications(account));
+    // model.addAttribute(new Notifications(account));
+    model.addAttribute(modelMapper.map(account, Notifications.class));
     return SETTINGS_NOTIFICATIONS_VIEW;
   }
+
   @PostMapping(SETTINGS_NOTIFICATIONS_URL)
   public String updateNotifications(@CurrentUser Account account,
                                     @Valid Notifications notifications,
