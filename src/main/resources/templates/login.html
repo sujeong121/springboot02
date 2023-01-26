@@ -3,66 +3,66 @@
       xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments.html :: head"></head>
 <body class="bg-light">
-  <nav th:replace="fragments.html :: main-nav"></nav>
-  <div class="container">
-    <div clas="py-5 text-center">
-        <p class="lead">Study Cafe</p>
-        <h2>로 그 인</h2>
+<nav th:replace="fragments.html :: main-nav"></nav>
+<div class="container">
+  <div clas="py-5 text-center">
+    <p class="lead">Study Cafe</p>
+    <h2>로 그 인</h2>
+  </div>
+  <div class="row justify-content-center">
+    <!-- 잘못된 정보를 입력한 경우 -->
+    <!-- param.error 의 값이 null 이 아니면 true 가 됨 : true 인 경우에 보여주는 화면 -->
+    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+      <p>이메일(또는 닉네임)과 패스워드가 일치하지 않습니다.</p>
+      <p>또는 확인되지 않은 이메일을 입력하셨습니다. 이메일을 확인해 주세요.</p>
+      <p>
+        확인 후 다시 입력하시거나, <a href="#" th:href="@{/find-password}">패스워드 찾기</a>를 이용해 주세요.
+      </p>
     </div>
-    <div class="row justify-content-center">
-      <!-- 잘못된 정보를 입력한 경우 -->
-      <!-- param.error 의 값이 null 이 아니면 true 가 됨 : true 인 경우에 보여주는 화면 -->
-      <div th:if="${param.error}" class="alert alert-danger" role="alert">
-        <p>이메일(또는 닉네임)과 패스워드가 일치하지 않습니다.</p>
-        <p>또는 확인되지 않은 이메일을 입력하셨습니다. 이메일을 확인해 주세요.</p>
-        <p>
-          확인 후 다시 입력하시거나, <a href="#" th:href="@{/find-password}">패스워드 찾기</a>>를 이용해 주세요.
-        </p>
+
+    <!-- form -->
+    <form class="needs-validation col-sm-6" action="#" th:action="@{/login}" method="post" novalidate>
+      <!-- 이메일 / 닉네임 -->
+      <div class="form-group">
+        <label for="username">이메일 또는 닉네임</label>
+        <input id="username" type="text" name="username" class="form-control"
+               placeholder="myemail@email.com" aria-describedby="emailHelp" required>
+        <small id="emailHelp" class="form-text text-muted">
+          가입할 때 입력한 이메일 또는 닉네임을 입력하세요.
+        </small>
+        <small class="invalid-feedback">이메일을 입력하세요.</small>
+      </div>
+      <!-- 비밀번호 -->
+      <div class="form-group">
+        <label for="password">비밀번호</label>
+        <input id="password" type="password" name="password" class="form-control"
+               aria-describedby="passwordHelp" required>
+        <small id="passwordHelp" class="form-text text-muted">
+          비밀번호를 잊으셨다면, <a href=# th:href="@{/email-login}">비밀번호 없이 로그인하기</a>
+        </small>
+        <small class="invalid-feedback">비밀번호를 입력하세요.</small>
       </div>
 
-      <!-- form -->
-      <form class="needs-validation col-sm-6" action="#" th:action="@{/login}" method="post" novalidate>
-        <!-- 이메일 / 닉네임 -->
-        <div class="form-group">
-          <label for="username">이메일 또는 닉네임</label>
-          <input id="username" type="text" name="username" class="form-control"
-                 placeholder="myemail@email.com" aria-describedby="emailHelp" required>
-          <small id="emailHelp" class="form-text text-muted">
-            가입할 때 입력한 이메일 또는 닉네임을 입력하세요.
-          </small>
-          <small class="invalid-feedback">이메일을 입력하세요.</small>
-        </div>
-        <!-- 비밀번호 -->
-        <div class="form-group">
-          <label for="password">비밀번호</label>
-          <input id="password" type="password" name="password" class="form-control"
-                 aria-describedby="passwordHelp" required>
-          <small id="passwordHelp" class="form-text text-muted">
-            비밀번호를 잊으셨다면, <a href=# th:href="@{/email-login}">비밀번호 없이 로그인하기</a>
-          </small>
-          <small class="invalid-feedback">비밀번호를 입력하세요.</small>
-        </div>
+      <!-- 로그인 유지 checkbox -->
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>
+        <label class="for-check-label" for="rememberMe" aria-describedby="rememberMeHelp">로그인 유지</label>
+      </div>
 
-        <!-- 로그인 유지 checkbox -->
-        <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me" checked>
-          <label class="for-check-label" for="rememberMe" aria-describedby="rememberMeHelp">로그인 유지</label>
-        </div>
+      <!-- 로그인 버튼 (submit button) -->
+      <div class="form-group">
+        <button class="btn btn-success btn-block" type="submit"
+                aria-describedby="submitHelp">로그인</button>
+        <small id="submitHelp" class="form-text text-muted">
+          Study Cafe 에 처음 방문하셨으면 <a href="#" th:href="@{/sign-up}">먼저 회원가입을 해 주세요</a>
+        </small>
+      </div>
 
-        <!-- 로그인 버튼 (submit button) -->
-        <div class="form-group">
-          <button class="btn btn-success btn-block" type="submit"
-                  aria-describedby="submitHelp">로그인</button>
-          <small id="submitHelp" class="form-text text-muted">
-            Study Cafe 에 처음 방문하셨으면 <a href="#" th:href="@{/signup}">먼저 회원가입을 해 주세요</a>
-          </small>
-        </div>
-
-      </form>
-    </div>
-    <div th:replace="fragments.html :: footer"></div>
+    </form>
   </div>
+  <div th:replace="fragments.html :: footer"></div>
+</div>
 
-  <script th:replace="fragments.html :: form-validation"></script>
+<script th:replace="fragments.html :: form-validation"></script>
 </body>
 </html>

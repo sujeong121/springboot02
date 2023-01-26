@@ -54,6 +54,10 @@ public class SettingsController {
   static final String SETTINGS_ACCOUNT_VIEW = "settings/account";
   static final String SETTINGS_ACCOUNT_URL = "/" + SETTINGS_ACCOUNT_VIEW;
 
+  static final String SETTINGS_TAGS_VIEW = "settings/tags";
+  static final String SETTINGS_TAGS_URL = "/" + SETTINGS_TAGS_VIEW;
+
+
   // Service type 의 멤버변수 선언
   private final AccountService accountService;
 
@@ -182,6 +186,13 @@ public class SettingsController {
     redirectAttributes.addFlashAttribute("message", "알림 설정이 변경되었습니다.");
     return "redirect:" + SETTINGS_NOTIFICATIONS_URL;
   }
+
+  @GetMapping(SETTINGS_TAGS_URL)
+  public String updateTags(@CurrentUser Account account, Model model){
+    model.addAttribute(account);
+    return SETTINGS_TAGS_VIEW;
+  }
+
 
   // nickName
 
