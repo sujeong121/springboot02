@@ -1,5 +1,6 @@
-package com.global.settings;
+package com.global.settings.validator;
 
+import com.global.settings.form.PasswordForm;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 

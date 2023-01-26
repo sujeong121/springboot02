@@ -1,4 +1,4 @@
-package com.global.settings;
+package com.global.settings.form;
 
 import com.global.domain.Account;
 import lombok.Data;

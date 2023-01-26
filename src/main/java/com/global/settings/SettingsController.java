@@ -3,8 +3,13 @@ package com.global.settings;
 import com.global.account.AccountService;
 import com.global.account.CurrentUser;
 import com.global.domain.Account;
+import com.global.settings.form.NickNameForm;
+import com.global.settings.form.Notifications;
+import com.global.settings.form.PasswordForm;
+import com.global.settings.form.Profile;
+import com.global.settings.validator.NickNameValidator;
+import com.global.settings.validator.PasswordFormValidator;
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.checker.units.qual.C;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,13 +41,18 @@ import javax.validation.Valid;
 public class SettingsController {
   // settings/profile 문자열을 static 변수에 저장
   static final String SETTINGS_PROFILE_VIEW = "settings/profile";
-  static final String SETTINGS_PROFILE_URL = "/settings/profile";
+  // static final String SETTINGS_PROFILE_URL = "/settings/profile";
+  static final String SETTINGS_PROFILE_URL = "/" + SETTINGS_PROFILE_VIEW;
 
   static final String SETTINGS_PASSWORD_VIEW = "settings/password";
-  static final String SETTINGS_PASSWORD_URL = "/settings/password";
+  // static final String SETTINGS_PASSWORD_URL = "/settings/password";
+  static final String SETTINGS_PASSWORD_URL = "/" + SETTINGS_PASSWORD_VIEW;
 
   static final String SETTINGS_NOTIFICATIONS_VIEW = "settings/notifications";
-  static final String SETTINGS_NOTIFICATIONS_URL = "/settings/notifications";
+  static final String SETTINGS_NOTIFICATIONS_URL = "/" + SETTINGS_NOTIFICATIONS_VIEW;
+
+  static final String SETTINGS_ACCOUNT_VIEW = "settings/account";
+  static final String SETTINGS_ACCOUNT_URL = "/" + SETTINGS_ACCOUNT_VIEW;
 
   // Service type 의 멤버변수 선언
   private final AccountService accountService;
@@ -51,11 +61,19 @@ public class SettingsController {
   // @RequiredArgsConstructor 에 의해서 Spring 으로부터 주입 받기
   private final ModelMapper modelMapper;
 
+  private final NickNameValidator nickNameValidator;
+
+
   // PasswordFormValidator 를 Bean 으로 등록하지 않고
   // initBinder 를 사용해서 객체를 생성
   @InitBinder("passwordForm")
   public void initBinder(WebDataBinder webDataBinder){
     webDataBinder.addValidators(new PasswordFormValidator());
+  }
+
+  @InitBinder("nickNameForm")
+  public void nickNameInitBinder(WebDataBinder webDataBinder){
+    webDataBinder.addValidators(nickNameValidator);
   }
 
   // 주소표시줄에 /settings/profile 요청이 들어오면
@@ -163,5 +181,29 @@ public class SettingsController {
     accountService.updateNotifications(account, notifications);
     redirectAttributes.addFlashAttribute("message", "알림 설정이 변경되었습니다.");
     return "redirect:" + SETTINGS_NOTIFICATIONS_URL;
+  }
+
+  // nickName
+
+  @GetMapping(SETTINGS_ACCOUNT_URL)
+  public String updateAccountForm(@CurrentUser Account account, Model model){
+    model.addAttribute(account);
+    model.addAttribute(modelMapper.map(account, NickNameForm.class));
+    return SETTINGS_ACCOUNT_VIEW;
+  }
+
+  @PostMapping(SETTINGS_ACCOUNT_URL)
+  public String updateAccount(@CurrentUser Account account,
+                              @Valid NickNameForm nickNameForm,
+                              Errors errors, Model model,
+                              RedirectAttributes redirectAttributes){
+    if(errors.hasErrors()){
+      model.addAttribute(account);
+      return SETTINGS_ACCOUNT_VIEW;
+    }
+
+    accountService.updateNickName(account, nickNameForm.getNickName());
+    redirectAttributes.addFlashAttribute("message", "닉네임을 수정했습니다.");
+    return "redirect:" + SETTINGS_ACCOUNT_URL;
   }
 }

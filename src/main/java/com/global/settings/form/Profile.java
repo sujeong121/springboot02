@@ -1,4 +1,4 @@
-package com.global.settings;
+package com.global.settings.form;
 
 import com.global.domain.Account;
 import lombok.Data;
@@ -24,8 +24,8 @@ public class Profile {
   private String profileImage;
 /*
   public Profile(Account account){
-    ModelMapper modelMapper = new ModelMapper();
-    modelMapper.map(account, account);
+    // ModelMapper modelMapper = new ModelMapper();
+    // modelMapper.map(this, account);
     this.bio = account.getBio();
     this.url = account.getUrl();
     this.occupation = account.getOccupation();

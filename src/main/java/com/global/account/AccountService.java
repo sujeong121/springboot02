@@ -1,13 +1,12 @@
 package com.global.account;
 
 import com.global.domain.Account;
-import com.global.settings.Notifications;
-import com.global.settings.Profile;
+import com.global.settings.form.Notifications;
+import com.global.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -16,11 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.el.ELContext;
 import javax.validation.Valid;
 import java.util.List;
 // @Transactional : AccountService 클래스의 모든 메소드 작업이
@@ -159,5 +156,21 @@ public class AccountService implements UserDetailsService {
     account.setStudyUpdatedByEmail(notifications.isStudyUpdatedByWeb());
      */
     accountRepository.save(account);
+  }
+
+  public void updateNickName(Account account, String nickName){
+    account.setNickName(nickName);
+    accountRepository.save(account);
+    login(account);
+  }
+
+  public void sendLoginLink(Account account) {
+    account.generateEmailCheckToken();
+    SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+    simpleMailMessage.setTo(account.getEmail());
+    simpleMailMessage.setSubject("Global Study Cafe 로그인 링크입니다");
+    simpleMailMessage.setText("/login-by-email?token=" + account.getEmailCheckToken() +
+                              "&email=" + account.getEmail());
+    javaMailSender.send(simpleMailMessage);
   }
 }
