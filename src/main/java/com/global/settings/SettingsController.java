@@ -3,25 +3,23 @@ package com.global.settings;
 import com.global.account.AccountService;
 import com.global.account.CurrentUser;
 import com.global.domain.Account;
-import com.global.settings.form.NickNameForm;
-import com.global.settings.form.Notifications;
-import com.global.settings.form.PasswordForm;
-import com.global.settings.form.Profile;
+import com.global.domain.Tag;
+import com.global.settings.form.*;
 import com.global.settings.validator.NickNameValidator;
 import com.global.settings.validator.PasswordFormValidator;
+import com.global.tag.TagRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 // error 없을 시 update(수정) 진행
@@ -67,6 +65,7 @@ public class SettingsController {
 
   private final NickNameValidator nickNameValidator;
 
+  private final TagRepository tagRepository;
 
   // PasswordFormValidator 를 Bean 으로 등록하지 않고
   // initBinder 를 사용해서 객체를 생성
@@ -193,6 +192,33 @@ public class SettingsController {
     return SETTINGS_TAGS_VIEW;
   }
 
+
+  // 관심 주제 등록 기능 구현
+  @PostMapping("/settings/tags/add")
+
+  public ResponseEntity addTag(@CurrentUser Account account,
+                       @RequestBody TagForm tagForm){
+    String title = tagForm.getTagTitle();
+
+    // title 에 할당된 문자열과 같은 tag 가
+    // 있는지 없는지 DB 에서 찾아봄
+    /*
+     Optional 을 사용하는 경우
+    Tag tag = tagRepository.findByTitle(title).orElseGet(() -> tagRepository.save(Tag.builder()
+                                                                                      .title(tagForm.getTagTitle())
+                                                                                      .build()));
+     */
+    Tag tag = tagRepository.findByTitle(title);
+    /* Optional 을 사용하지 않고 조건문으로 null 값을 처리하는 경우 */
+    // tagRepository.findByTitle(title) 로 tag 를 가져오지 못하면 찾아서 할당
+    if(title == null){
+      tag = tagRepository.save(Tag.builder().title(tagForm.getTagTitle()).build());
+    }
+
+    accountService.addTag(account, tag);
+
+    return ResponseEntity.ok().build();
+  }
 
   // nickName
 

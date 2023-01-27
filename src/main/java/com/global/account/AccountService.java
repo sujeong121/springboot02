@@ -1,6 +1,7 @@
 package com.global.account;
 
 import com.global.domain.Account;
+import com.global.domain.Tag;
 import com.global.settings.form.Notifications;
 import com.global.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
+
 // @Transactional : AccountService 클래스의 모든 메소드 작업이
 //                  Transaction 안에서 진행되도록 설정함
 @Service
@@ -172,5 +175,13 @@ public class AccountService implements UserDetailsService {
     simpleMailMessage.setText("/login-by-email?token=" + account.getEmailCheckToken() +
                               "&email=" + account.getEmail());
     javaMailSender.send(simpleMailMessage);
+  }
+
+  public void addTag(Account account, Tag tag) {
+    // Account 는 persistence 객체가 아니라서 (
+    // Account 를 먼저 읽어야 함
+    Optional<Account> byId = accountRepository.findById(account.getId());
+    // a = account 객체
+    byId.ifPresent(a -> a.getTags().add(tag));
   }
 }

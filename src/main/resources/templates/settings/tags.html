@@ -26,6 +26,22 @@
   </div>
 </div>
 <script src="/node_modules/@yaireo/tagify/dist/tagify.min.js"></script>
+
+<!--
+  th:inline="javascript"
+
+-->
+<script type="application/javascript" th:inline="javascript">
+  $(function(){
+    let csrfToken = /* [[${_csrf.token}]] */ null;
+    let csrfHeader = /* [[${_csrf.token}]] */ null;
+    $(document).ajaxSend(function (e, xhr, options) {
+      xhr.setRequestHeader(csrfHeader, csrfToken);
+    });
+  });
+</script>
+
+
 <script type="application/javascript">
   $(function(){
     function tagRequest(url, tagTitle){
