@@ -24,4 +24,10 @@ public class Zone {
 
   @Column(nullable = true)
   private String province;
+
+  @Override
+  public String toString(){
+    return String.format("%s(%s)/%s", city, localNameOfCity, province);
+    // return city + "(" + localNameOfCity + ")/" + province;
+  }
 }

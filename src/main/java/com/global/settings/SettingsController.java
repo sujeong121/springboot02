@@ -1,13 +1,17 @@
 package com.global.settings;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.global.account.AccountService;
 import com.global.account.CurrentUser;
 import com.global.domain.Account;
 import com.global.domain.Tag;
+import com.global.domain.Zone;
 import com.global.settings.form.*;
 import com.global.settings.validator.NickNameValidator;
 import com.global.settings.validator.PasswordFormValidator;
 import com.global.tag.TagRepository;
+import com.global.zone.ZoneRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,6 +44,11 @@ import java.util.stream.Collectors;
 @Controller
 @RequiredArgsConstructor
 public class SettingsController {
+
+  static final String ROOT = "/";
+  static final String SETTINGS = "settings";
+  static final String ZONES = "/zones";
+
   // settings/profile 문자열을 static 변수에 저장
   static final String SETTINGS_PROFILE_VIEW = "settings/profile";
   // static final String SETTINGS_PROFILE_URL = "/settings/profile";
@@ -57,6 +67,10 @@ public class SettingsController {
   static final String SETTINGS_TAGS_VIEW = "settings/tags";
   static final String SETTINGS_TAGS_URL = "/" + SETTINGS_TAGS_VIEW;
 
+  static final String SETTINGS_ZONES_VIEW = "settings/zones";
+  static final String SETTINGS_ZONES_URL = "/" + SETTINGS_ZONES_VIEW;
+
+
 
   // Service type 의 멤버변수 선언
   private final AccountService accountService;
@@ -68,6 +82,10 @@ public class SettingsController {
   private final NickNameValidator nickNameValidator;
 
   private final TagRepository tagRepository;
+  private final ZoneRepository zoneRepository;
+
+  // Java 객체를 Json 으로 변환함
+  private final ObjectMapper objectMapper;
 
   // PasswordFormValidator 를 Bean 으로 등록하지 않고
   // initBinder 를 사용해서 객체를 생성
@@ -210,7 +228,7 @@ public class SettingsController {
 
   // 관심 주제 등록 기능 구현
   @PostMapping("/settings/tags/add")
-  // @RequestBody()
+  @ResponseBody
   public ResponseEntity addTag(@CurrentUser Account account,
                        @RequestBody TagForm tagForm){
     String title = tagForm.getTagTitle();
@@ -236,7 +254,7 @@ public class SettingsController {
   }
 
   @PostMapping(SETTINGS_TAGS_URL + "/remove")
-  @RequestBody
+  @ResponseBody
   public ResponseEntity removeTag(@CurrentUser Account account,
                                   @RequestBody TagForm tagForm){
     String  title = tagForm.getTagTitle();
@@ -270,5 +288,53 @@ public class SettingsController {
     accountService.updateNickName(account, nickNameForm.getNickName());
     redirectAttributes.addFlashAttribute("message", "닉네임을 수정했습니다.");
     return "redirect:" + SETTINGS_ACCOUNT_URL;
+  }
+
+
+  @GetMapping(SETTINGS_ZONES_URL)
+  public String updateZoneForm(@CurrentUser Account account, Model model) throws JsonProcessingException {
+    model.addAttribute(account);
+
+    Set<Zone> zones = accountService.getZones(account);
+    model.addAttribute("zones", zones.stream().map(Zone::toString).collect(Collectors.toList()));
+
+    List<String> allZones = zoneRepository.findAll().stream().map(Zone::toString).collect(Collectors.toList());
+    model.addAttribute("allZones", objectMapper.writeValueAsString(allZones));
+
+    return SETTINGS_ZONES_VIEW;
+  }
+
+  // zone.html 의 ajax 에서
+
+
+
+
+
+
+  @PostMapping(SETTINGS_ZONES_URL + "/add")
+  @ResponseBody
+  public ResponseEntity addZone(@CurrentUser Account account,
+                                @RequestBody ZoneForm zoneForm){
+
+    Zone zone = zoneRepository.findByCityAndProvince(zoneForm.getCityName(), zoneForm.getProvinceName());
+    if(zone == null){
+      return ResponseEntity.badRequest().build();
+    }
+    accountService.addZone(account, zone);
+    return ResponseEntity.ok().build();
+  }
+
+  //
+  @PostMapping(SETTINGS_ZONES_URL + "/remove")
+  @ResponseBody
+  public ResponseEntity removeZone(@CurrentUser Account account,
+                                   @RequestBody ZoneForm zoneForm){
+
+    Zone zone = zoneRepository.findByCityAndProvince(zoneForm.getCityName(), zoneForm.getProvinceName());
+    if(zone == null){
+      return ResponseEntity.badRequest().build();
+    }
+    accountService.removeZone(account, zone);
+    return ResponseEntity.ok().build();
   }
 }

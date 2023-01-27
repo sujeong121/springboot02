@@ -5,6 +5,8 @@ import com.global.account.AccountRepository;
 import com.global.account.AccountService;
 import com.global.account.SignUpForm;
 import com.global.domain.Account;
+import com.global.domain.Zone;
+import com.global.settings.form.ZoneForm;
 import jdk.jshell.spi.ExecutionControlProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.TestExecutionEvent;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -23,6 +26,10 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import static com.global.settings.SettingsController.ROOT;
+import static com.global.settings.SettingsController.SETTINGS;
+import static com.global.settings.SettingsController.ZONES;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -35,6 +42,11 @@ class SettingsControllerTest {
 
   @Autowired
   PasswordEncoder passwordEncoder;
+
+  private Zone testZone = Zone.builder()
+                              .city("testCity")
+                              .localNameOfCity("테스트도시")
+                              .province("testProvince").build();
 
 /*
   @BeforeEach
@@ -134,6 +146,8 @@ class SettingsControllerTest {
    assertTrue(passwordEncoder.matches("12345678", global.getPassword()));
   }
 
+
+
   @WithAccount("global")
   @DisplayName("비밀번호 수정 테스트 - 비밀번호 일치하지 않는 경우")
   @Test
@@ -148,6 +162,8 @@ class SettingsControllerTest {
             .andExpect(model().attributeExists("passwordForm"))
             .andExpect(model().attributeExists("account"));
   }
+
+
 
   @WithAccount("global")
   @DisplayName("닉네임 폼 수정하기")
@@ -187,5 +203,20 @@ class SettingsControllerTest {
             .andExpect(model().attributeExists("account"))
             .andExpect(model().attributeExists("nickNameForm"));
 
+  }
+
+
+
+  @WithAccount("global")
+  @DisplayName("지역 정보 추가 테스트")
+  @Test
+  void addZone() throws Exception{
+    ZoneForm zoneForm = new ZoneForm();
+    zoneForm.setZoneName(testZone.toString());
+
+    mockMvc.perform(post(ROOT + SETTINGS + ZONES + "/add")
+            .contentType(MediaType.APPLICATION_JSON)
+            .contentType(objectMapper.)
+    )
   }
 }

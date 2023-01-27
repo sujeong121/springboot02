@@ -2,6 +2,7 @@ package com.global.account;
 
 import com.global.domain.Account;
 import com.global.domain.Tag;
+import com.global.domain.Zone;
 import com.global.settings.form.Notifications;
 import com.global.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
@@ -197,5 +198,20 @@ public class AccountService implements UserDetailsService {
     Optional<Account> byId = accountRepository.findById(account.getId());
     byId.ifPresent(a -> a.getTags().remove(tag));
 
+  }
+
+  public Set<Zone> getZones(Account account) {
+    Optional<Account> byId = accountRepository.findById(account.getId());
+    return byId.orElseThrow().getZones();
+  }
+
+  public void addZone(Account account, Zone zone) {
+    Optional<Account> byId = accountRepository.findById(account.getId());
+    byId.ifPresent(a -> a.getZones().add(zone));
+  }
+
+  public void removeZone(Account account, Zone zone) {
+    Optional<Account> byId = accountRepository.findById(account.getId());
+    byId.ifPresent(a -> a.getZones().remove(zone));
   }
 }

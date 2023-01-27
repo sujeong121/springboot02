@@ -135,5 +135,15 @@
       }, false)
     }())
   </script>
+
+<script type="application/javascript" th:inline="javascript" th:fragment="ajax-csrf-header">
+  $(function(){
+    let csrfToken = /* [[${_csrf.token}]] */ null;
+    let csrfHeader = /* [[${_csrf.token}]] */ null;
+    $(document).ajaxSend(function (e, xhr, options) {
+      xhr.setRequestHeader(csrfHeader, csrfToken);
+    });
+  });
+</script>
 </body>
 </html>
