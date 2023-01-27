@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 // @Transactional : AccountService 클래스의 모든 메소드 작업이
 //                  Transaction 안에서 진행되도록 설정함
@@ -183,5 +184,18 @@ public class AccountService implements UserDetailsService {
     Optional<Account> byId = accountRepository.findById(account.getId());
     // a = account 객체
     byId.ifPresent(a -> a.getTags().add(tag));
+  }
+
+  public Set<Tag> getTags(Account account) {
+    Optional<Account> byId = accountRepository.findById(account.getId());
+
+    // 없으면 예외발생, 있으면 tag 정보 가져옴
+    return byId.orElseThrow().getTags();
+  }
+
+  public void removeTag(Account account, Tag tag) {
+    Optional<Account> byId = accountRepository.findById(account.getId());
+    byId.ifPresent(a -> a.getTags().remove(tag));
+
   }
 }

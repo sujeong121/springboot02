@@ -20,6 +20,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 // error 없을 시 update(수정) 진행
@@ -186,16 +188,29 @@ public class SettingsController {
     return "redirect:" + SETTINGS_NOTIFICATIONS_URL;
   }
 
+  // tag 수정 뷰
   @GetMapping(SETTINGS_TAGS_URL)
   public String updateTags(@CurrentUser Account account, Model model){
     model.addAttribute(account);
+
+    // form 입력 view 에서
+    // 등록한 tag 정보들 조회
+    // Account 가 가지고 있는 tag 정보 가져옴
+    Set<Tag> tags = accountService.getTags(account);
+
+    // view 에서 보여줄 때 Tag Entity type 이 아닌
+    // 문자열로 전송
+    // Tag type 의 list 가 아니고, 문자열 type 의 list
+    model.addAttribute("tags", tags.stream().map(Tag::getTitle).collect(Collectors.toList()));
+
+    // settings/tags
     return SETTINGS_TAGS_VIEW;
   }
 
 
   // 관심 주제 등록 기능 구현
   @PostMapping("/settings/tags/add")
-
+  // @RequestBody()
   public ResponseEntity addTag(@CurrentUser Account account,
                        @RequestBody TagForm tagForm){
     String title = tagForm.getTagTitle();
@@ -217,6 +232,19 @@ public class SettingsController {
 
     accountService.addTag(account, tag);
 
+    return ResponseEntity.ok().build();
+  }
+
+  @PostMapping(SETTINGS_TAGS_URL + "/remove")
+  @RequestBody
+  public ResponseEntity removeTag(@CurrentUser Account account,
+                                  @RequestBody TagForm tagForm){
+    String  title = tagForm.getTagTitle();
+    Tag tag = tagRepository.findByTitle(title);
+    if(tag == null){
+      return ResponseEntity.badRequest().build();
+    }
+    accountService.removeTag(account, tag);
     return ResponseEntity.ok().build();
   }
 

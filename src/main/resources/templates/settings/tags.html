@@ -19,7 +19,8 @@
             관심 있는 스터디 주제를 입력해 주세요. 관심 있는 주제로 스터디가 개설되면 알림을 받게 됩니다.
             태그를 입력하고 반점이나 엔터를 입력하세요.
           </div>
-          <input type="text" id="tags" name="tags" class="tagify-outside" aria-describedby="tagHelp" />
+          <input type="text" id="tags" name="tags" th:value="${#strings.listJoin(tags, ',')}"
+                 class="tagify-outside" aria-describedby="tagHelp" />
         </div>
       </div>
     </div>
@@ -53,7 +54,7 @@
         },
         contentType: "application/json; charset=utf-8",
         method: "POST",
-        url: "settings/tags" + url,
+        url: "/settings/tags" + url,
         data: JSON.stringify({'tagTitle': tagTitle})
       }).done(function(data, status){
         console.log("${data} and status is ${status}");
