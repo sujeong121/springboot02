@@ -1,5 +1,6 @@
 package com.global.settings;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.global.WithAccount;
 import com.global.account.AccountRepository;
 import com.global.account.AccountService;
@@ -7,6 +8,7 @@ import com.global.account.SignUpForm;
 import com.global.domain.Account;
 import com.global.domain.Zone;
 import com.global.settings.form.ZoneForm;
+import com.global.zone.ZoneRepository;
 import jdk.jshell.spi.ExecutionControlProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,28 +45,41 @@ class SettingsControllerTest {
   @Autowired
   PasswordEncoder passwordEncoder;
 
+  @Autowired
+  ObjectMapper objectMapper;
+
+  @Autowired AccountService accountService;
+
   private Zone testZone = Zone.builder()
                               .city("testCity")
                               .localNameOfCity("테스트도시")
                               .province("testProvince").build();
+  @Autowired
+  private ZoneRepository zoneRepository;
 
-/*
+  /*
+    @BeforeEach
+    void beforeEach(){
+
+      WithAccountSecurityContextFactory 클래스의
+      createSecurityContext() 메소드에서 진행
+      SignUpForm signUpForm = new SignUpForm();
+      signUpForm.setNickName("global");
+      signUpForm.setEmail("global@gmail.com");
+      signUpForm.setPassword("12345678");
+      accountService.processNewAccount(signUpForm);
+
+    }
+  */
   @BeforeEach
   void beforeEach(){
-
-    WithAccountSecurityContextFactory 클래스의
-    createSecurityContext() 메소드에서 진행
-    SignUpForm signUpForm = new SignUpForm();
-    signUpForm.setNickName("global");
-    signUpForm.setEmail("global@gmail.com");
-    signUpForm.setPassword("12345678");
-    accountService.processNewAccount(signUpForm);
-
+    zoneRepository.save(testZone);
   }
-*/
+
   @AfterEach
   void afterEach(){
     accountRepository.deleteAll();
+    zoneRepository.deleteAll();
   }
 
   // @WithAccount("global") - 인증정보를 제공해 주는 annotation
@@ -208,15 +223,56 @@ class SettingsControllerTest {
 
 
   @WithAccount("global")
-  @DisplayName("지역 정보 추가 테스트")
+  @DisplayName("지역 정보 수정 폼 테스트")
+  @Test
+  void updateZonesForm() throws Exception{
+    mockMvc.perform(get(ROOT + SETTINGS + ZONES))
+            .andExpect(view().name(SETTINGS + ZONES))
+            .andExpect(model().attributeExists("account"))
+            .andExpect(model().attributeExists("allZones"))
+            .andExpect(model().attributeExists("zones"));
+  }
+
+
+  @WithAccount("global")
+  @DisplayName("지역 정보 추가 테스트 - add")
   @Test
   void addZone() throws Exception{
+    // add 할 때, form 으로 입력받은 객체 생성함
     ZoneForm zoneForm = new ZoneForm();
     zoneForm.setZoneName(testZone.toString());
 
     mockMvc.perform(post(ROOT + SETTINGS + ZONES + "/add")
+            // add 할 때, content 로 JSON 을 넣어줌
             .contentType(MediaType.APPLICATION_JSON)
-            .contentType(objectMapper.)
-    )
+            .contentType(objectMapper.writeValueAsString(zoneForm))
+            .with(csrf()))
+            .andExpect(status().isOk());
+
+    Account global = accountRepository.findByNickName("global");
+    Zone zone = zoneRepository.findByCityAndProvince(testZone.getCity(), testZone.getProvince());
+    assertTrue(global.getZones().contains(zone));
+  }
+
+  @WithAccount("global")
+  @DisplayName("지역 정보 삭제 테스트 - remove")
+  @Test
+  void removeZone() throws Exception{
+    Account global = accountRepository.findByNickName("global");
+    Zone zone = zoneRepository.findByCityAndProvince(testZone.getCity(), testZone.getProvince());
+    accountService.addZone(global, zone);
+
+    // remove 할 때, form 으로 입력받은 객체 생성함
+    ZoneForm zoneForm = new ZoneForm();
+    zoneForm.setZoneName(testZone.toString());
+
+    mockMvc.perform(post(ROOT + SETTINGS + ZONES + "/remove")
+            // add 할 때, content 로 JSON 을 넣어줌
+            .contentType(MediaType.APPLICATION_JSON)
+            .contentType(objectMapper.writeValueAsString(zoneForm))
+            .with(csrf()))
+            .andExpect(status().isOk());
+
+    assertFalse(global.getZones().contains(zone));
   }
 }
