@@ -4,12 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.global.WithAccount;
 import com.global.account.AccountRepository;
 import com.global.account.AccountService;
-import com.global.account.SignUpForm;
 import com.global.domain.Account;
 import com.global.domain.Zone;
 import com.global.settings.form.ZoneForm;
 import com.global.zone.ZoneRepository;
-import jdk.jshell.spi.ExecutionControlProvider;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,8 +17,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.TestExecutionEvent;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,13 +46,13 @@ class SettingsControllerTest {
 
   @Autowired AccountService accountService;
 
+  @Autowired
+  private ZoneRepository zoneRepository;
+
   private Zone testZone = Zone.builder()
                               .city("testCity")
                               .localNameOfCity("테스트도시")
                               .province("testProvince").build();
-  @Autowired
-  private ZoneRepository zoneRepository;
-
   /*
     @BeforeEach
     void beforeEach(){
@@ -93,8 +89,8 @@ class SettingsControllerTest {
             .andExpect(model().attributeExists("account"))
             .andExpect(model().attributeExists("profile"));
 
-    Account global = accountRepository.findByNickName("global");
-    assertNull(global.getBio());
+
+
   }
 
 

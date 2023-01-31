@@ -1,5 +1,6 @@
 package com.global.account;
 
+import com.global.account.form.SignUpForm;
 import com.global.config.AppProperties;
 import com.global.domain.Account;
 import com.global.domain.Tag;
@@ -11,9 +12,6 @@ import com.global.settings.form.Profile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -27,12 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalDouble;
 import java.util.Set;
 
 // AccountService 클래스는 @Service 에 의해서
