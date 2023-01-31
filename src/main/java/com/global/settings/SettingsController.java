@@ -47,7 +47,7 @@ public class SettingsController {
 
   static final String ROOT = "/";
   static final String SETTINGS = "settings";
-  static final String ZONES = "/zones";
+  static final String ZONES = "zones";
 
   // settings/profile 문자열을 static 변수에 저장
   static final String SETTINGS_PROFILE_VIEW = "settings/profile";
@@ -157,7 +157,7 @@ public class SettingsController {
   }
 
   @GetMapping(SETTINGS_PASSWORD_URL)
-  public String passwordUpdateForm(@CurrentUser Account account, Model model){
+  public String updatePasswordForm(@CurrentUser Account account, Model model){
     model.addAttribute(account);
 
     // Form 으로 사용할 객체 없음 -> Form 으로 사용할 클래스 작성
@@ -227,7 +227,7 @@ public class SettingsController {
 
 
   // 관심 주제 등록 기능 구현
-  @PostMapping("/settings/tags/add")
+  @PostMapping(SETTINGS_TAGS_URL + "/add")
   @ResponseBody
   public ResponseEntity addTag(@CurrentUser Account account,
                        @RequestBody TagForm tagForm){
@@ -244,7 +244,7 @@ public class SettingsController {
     Tag tag = tagRepository.findByTitle(title);
     /* Optional 을 사용하지 않고 조건문으로 null 값을 처리하는 경우 */
     // tagRepository.findByTitle(title) 로 tag 를 가져오지 못하면 찾아서 할당
-    if(title == null){
+    if(tag == null){
       tag = tagRepository.save(Tag.builder().title(tagForm.getTagTitle()).build());
     }
 
@@ -257,7 +257,7 @@ public class SettingsController {
   @ResponseBody
   public ResponseEntity removeTag(@CurrentUser Account account,
                                   @RequestBody TagForm tagForm){
-    String  title = tagForm.getTagTitle();
+    String title = tagForm.getTagTitle();
     Tag tag = tagRepository.findByTitle(title);
     if(tag == null){
       return ResponseEntity.badRequest().build();

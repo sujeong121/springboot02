@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>GlobalStudy</title>
+</head>
+<body>
+<div>
+  <p>안녕하세요. <span th:text="${linkName}"></span>님</p>
+  <h2 th:text="${message}">메세지</h2>
+  <div>
+    <a th:href="${host + link}" th:text="${linkName}">Link</a><br>
+    <p>링크가 연결되지 않으면 아래의 URL 을 복사해서 웹브라우저 주소표시줄에 붙여 넣으세요</p><br>
+    <small th:text="${host + link}"></small>
+
+  </div>
+</div><br>
+<footer>
+  <small>GlobalStudy&copy; 2023</small>
+</footer>
+</body>
+</html>

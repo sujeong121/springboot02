@@ -1,6 +1,8 @@
 package com.global.account;
 
 import com.global.domain.Account;
+import com.global.mail.EmailMessage;
+import com.global.mail.EmailService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +36,10 @@ class AccountControllerTest {
   @Autowired
   private AccountRepository accountRepository;
 
+  // @MockBean JavaMailSender javaMailSender;
+
   @MockBean
-  JavaMailSender javaMailSender;
+  EmailService emailService;
 
   @DisplayName("인증 메일 확인 - 입력값이 잘못 된 경우")
   @Test
@@ -127,7 +131,7 @@ class AccountControllerTest {
     // 이메일 확인하기
     assertTrue(accountRepository.existsByEmail("test@gmail.com"));
     // mail 을 보내는지 test 하기
-    then(javaMailSender).should().send(any(SimpleMailMessage.class));
+    then(emailService).should().sendEmail(any(EmailMessage.class));
   }
 
 
