@@ -1,11 +1,19 @@
 package com.global.domain;
 
+import com.global.account.UserAccount;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 
+// withAllRelations -> withAll 줄일 수 있음
+@NamedEntityGraph(name="Study.withAllRelations", attributeNodes = {
+  @NamedAttributeNode("tags"),
+  @NamedAttributeNode("zones"),
+  @NamedAttributeNode("managers"),
+  @NamedAttributeNode("members")})
 @Entity
 @Getter @Setter @EqualsAndHashCode(of="id")
 @Builder @AllArgsConstructor @NoArgsConstructor
@@ -18,10 +26,10 @@ public class Study {
   // 추후에 일반 멤버들에게 매니저 권한을 부여할 수 있도록 설정
   // 매니저 권한 위임 가능하게 설정
   @ManyToMany
-  private Set<Account> managers;
+  private Set<Account> managers = new HashSet<>();
 
   @ManyToMany
-  private Set<Account> members;
+  private Set<Account> members = new HashSet<>();
 
   @Column(unique = true)
   private String path;
@@ -67,4 +75,21 @@ public class Study {
 
   // Banner 사용 여부
   private boolean useBanner;
+
+  public void addManager(Account account) {
+    this.managers.add(account);
+  }
+
+  public boolean isJoinable(UserAccount userAccount){
+    Account account = userAccount.getAccount();
+    return this.isPublished() && this.isRecruiting()
+      && !this.members.contains(account) && !this.managers.contains(account);
+  }
+
+  public boolean isMember(UserAccount userAccount){
+    return this.members.contains(userAccount.getAccount());
+  }
+  public boolean isManager(UserAccount userAccount){
+    return this.managers.contains(userAccount.getAccount());
+  }
 }
