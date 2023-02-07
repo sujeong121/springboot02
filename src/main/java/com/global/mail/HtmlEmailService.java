@@ -34,6 +34,8 @@ public class HtmlEmailService implements EmailService{
       // Exception 발생하면 log 에 기록해서 출력하기
       // AccountService 클래스에 @Slf4j
       log.error("메일 전송 오류 발생", e);
+      //
+      throw new RuntimeException(e);
     }
 
   }

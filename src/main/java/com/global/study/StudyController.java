@@ -52,15 +52,14 @@ public class StudyController {
   }
 
   @PostMapping("/new-study")
-  public String newStudySubmit(@CurrentUser Account account,
-                               @Valid StudyForm studyForm, Errors errors){
+  public String newStudySubmit(@CurrentUser Account account, @Valid StudyForm studyForm,
+                               Errors errors, Model model){
     if(errors.hasErrors()){
+      model.addAttribute(account);
       return "study/form";
     }
 
-
     Study newStudy = studyService.createNewStudy(modelMapper.map(studyForm, Study.class), account);
-
     // url 에 한글 포함될 수 있으므로 URLEncoding 처리
     return "redirect:/study/" + URLEncoder.encode(newStudy.getPath(), StandardCharsets.UTF_8);
   }
@@ -68,8 +67,27 @@ public class StudyController {
   @GetMapping("/study/{path}") // {path}: path 로 biding 받음
   public String viewStudy(@CurrentUser Account account,
                           @PathVariable String path, Model model){
+
+    // 중복되므로 StudyService 에 getStudy 메소드 호출해서 사용
+    /*
+    Study study = this.studyRepository.findByPath(path);
+    if(study == null){
+      throw new IllegalArgumentException(path + "란 이름으로 개설된 study 가 없습니다");
+    }
+    */
+    Study study = studyService.getStudy(path);
+
     model.addAttribute(account);
+
     model.addAttribute(studyRepository.findByPath(path));
     return "study/view";
+  }
+
+  @GetMapping("/study/{path}/members")
+  public String viewStudyMembers(@CurrentUser Account account,
+                                 @PathVariable String path, Model model){
+    model.addAttribute(account);
+    model.addAttribute(studyRepository.findByPath(path));
+    return "study/members";
   }
 }

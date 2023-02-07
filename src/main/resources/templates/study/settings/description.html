@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments.html :: head"></head>
+<body class="bg-light">
+<div th:replace="fragments.html :: main-nav"></div>
+
+<!-- view.html  :  study 의 기본정보를 보여주는 page -->
+<!-- banner 를 사용하면 banner 를 보여줌 -->
+<div th:replace="fragments.html :: study-banner"></div>
+
+<div class="container">
+  <div th:replace="fragments.html :: study-info"></div>
+  <div th:replace="fragments.html :: study-menu(studyMenu='settings')"></div>
+
+  <div class="row mt-3 justify-content-center">
+    <div class="col-2">
+      <div th:replace="fragments.html :: study-settings-menu (currentMenu='description')"></div>
+    </div>
+    <div class="col-8">
+      <div th:replace="fragments.html :: message"></div>
+      <form class="needs-validation" th:action="@{'/study/' + ${study.getPath()} + '/settings/description'}"
+            th:object="${studyDescriptionForm}" method="post" novalidate>
+        <div class="form-group">
+          <label for="shortDescription">한 줄 소개</label>
+          <textarea id="shortDescription" type="textarea" th:field="*{shortDescription}" class="form-control"
+                    placeholder="한 줄 소개를 작성해 주세요."  aria-describedby="shortDescriptionHelp"
+                    required maxlength="100">
+          </textarea>
+          <small id="shortDescriptionHelp" class="form-text text-muted">
+            한 줄 소개를 100 자 이내로 작성해 주세요.
+          </small>
+          <small class="invalid-feedback">한 줄 소개를 작성해 주세요.</small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('shortDescription')}"
+                 th:errors="*{shortDescription}">ShortDescription Error</small>
+        </div>
+
+        <!-- summernote 에디터 사용하기 -->
+        <div class="form-group">
+          <label for="fullDescription">자세한 소개</label>
+          <textarea id="fullDescription" type="textarea" th:field="*{fullDescription}" class="form-control"
+                    placeholder="자세한 소개를 작성해 주세요."  aria-describedby="fullDescriptionHelp"
+                    required>
+          </textarea>
+          <small id="fullDescriptionHelp" class="form-text text-muted">
+            Study 의 목표, 일정, 진행방식, 교재, 모집인원 등 자세한 내용을 적어 주세요.
+          </small>
+          <small class="invalid-feedback">자세한 소개를 작성해 주세요.</small>
+          <small class="form-text text-danger" th:if="${#fields.hasErrors('fullDescription')}"
+                 th:errors="*{fullDescription}">FullDescription Error</small>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-primary btn-block" type="submit"
+                  aria-describedby="submitHelp">수정하기</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div th:replace="fragments.html :: footer"></div>
+</div>
+
+<script type="application/javascript">
+    $(function(){
+        $('[data-toggle="tooltip"]').tooltip()
+    });
+</script>
+
+<script th:replace="fragments.html :: form-validation"></script>
+<script th:replace="fragments.html :: editor-script"></script>
+</body>
+</html>

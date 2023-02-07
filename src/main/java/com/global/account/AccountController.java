@@ -165,19 +165,26 @@ public class AccountController {
   public String viewProfile(@PathVariable String nickName,
                             @CurrentUser Account account, Model model){
 
-    Account byNickName = accountRepository.findByNickName(nickName);
+    /*
+      이 부분 AccountService getAccount() 메소드에 작성하고 호출
+
+      Account byNickName = accountRepository.findByNickName(nickName);
     // nickName 이 들어오지 않은 경우
     if (nickName == null){
       throw  new IllegalArgumentException(nickName + " 에 해당하는 회원이 없습니다");
     }
+    */
+    Account accountToView = accountService.getAccount(nickName);
+
+
     // nickName 이 들어온 경우 <-- byNickName 을 메모리에 올려서
     //                              return 에서 지정한 html 페이지에서 사용할 수 있도록 함
     // model.addAttribute( ) 에 attributeValue(값) 만 지정하면,
     // attributeName(변수) 이름은 byNickName 에 들어가는 객체 type 의 camel case 로 사용함
     //                                                      ㄴ Account  <-- account
-    model.addAttribute(byNickName);
+    model.addAttribute(accountToView);
     // model.addAttribute("account", byNickName);
-    model.addAttribute("isCurrentUser", byNickName.equals(account));
+    model.addAttribute("isCurrentUser", accountToView.equals(account));
 
     return "account/profile";
   }

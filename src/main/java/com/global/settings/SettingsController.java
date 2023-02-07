@@ -11,6 +11,7 @@ import com.global.settings.form.*;
 import com.global.settings.validator.NickNameValidator;
 import com.global.settings.validator.PasswordFormValidator;
 import com.global.tag.TagRepository;
+import com.global.tag.TagService;
 import com.global.zone.ZoneRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -86,6 +87,8 @@ public class SettingsController {
 
   // Java 객체를 Json 으로 변환함
   private final ObjectMapper objectMapper;
+
+  private final TagService tagService;
 
   // PasswordFormValidator 를 Bean 으로 등록하지 않고
   // initBinder 를 사용해서 객체를 생성
@@ -231,25 +234,27 @@ public class SettingsController {
   @ResponseBody
   public ResponseEntity addTag(@CurrentUser Account account,
                        @RequestBody TagForm tagForm){
+    /*
     String title = tagForm.getTagTitle();
 
     // title 에 할당된 문자열과 같은 tag 가
     // 있는지 없는지 DB 에서 찾아봄
-    /*
+    *//*
      Optional 을 사용하는 경우
     Tag tag = tagRepository.findByTitle(title).orElseGet(() -> tagRepository.save(Tag.builder()
                                                                                       .title(tagForm.getTagTitle())
                                                                                       .build()));
-     */
+     *//*
     Tag tag = tagRepository.findByTitle(title);
-    /* Optional 을 사용하지 않고 조건문으로 null 값을 처리하는 경우 */
+    *//* Optional 을 사용하지 않고 조건문으로 null 값을 처리하는 경우 *//*
     // tagRepository.findByTitle(title) 로 tag 를 가져오지 못하면 찾아서 할당
     if(tag == null){
       tag = tagRepository.save(Tag.builder().title(tagForm.getTagTitle()).build());
     }
+    */
 
+    Tag tag = tagService.findOrCreateNew(tagForm.getTagTitle());
     accountService.addTag(account, tag);
-
     return ResponseEntity.ok().build();
   }
 

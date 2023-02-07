@@ -53,11 +53,17 @@ public class AccountService implements UserDetailsService {
   private final TemplateEngine templateEngine;
   private final AppProperties appProperties;
 
-
   public Account processNewAccount(SignUpForm signUpForm) {
     Account newAccount = saveNewAccount(signUpForm);
     // 이메일 보내기 전에 토큰값 생성하기
     newAccount.generateEmailCheckToken();
+    // 이메일 보냄 sendSignUpConfirmEmail() 메소드 호출
+    //
+    //
+    // 여기서 예외가 발생함 (가입하는 중에 오류가 발생한 경우)
+    //
+    //
+    //
     sendSignUpConfirmEmail(newAccount);
     return newAccount;
   }
@@ -92,7 +98,7 @@ public class AccountService implements UserDetailsService {
                                 .subject("Global Study 회원가입 인증")
                                 .message(message)
                                 .build();
-                              emailService.sendEmail(emailMessage);
+    emailService.sendEmail(emailMessage);
 
     /*
     SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
@@ -294,5 +300,14 @@ public class AccountService implements UserDetailsService {
     Optional<Account> byId =  accountRepository.findById(account.getId());
     // a 는 account 객체를 의미함
     byId.ifPresent(a -> a.getZones().remove(zone));
+  }
+
+  public Account getAccount(String nickName) {
+    Account account = accountRepository.findByNickName(nickName);
+    // nickName 이 들어오지 않은 경우
+    if (account == null){
+      throw  new IllegalArgumentException(nickName + " 에 해당하는 회원이 없습니다");
+    }
+    return account;
   }
 }

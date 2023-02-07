@@ -131,6 +131,7 @@
   </div>
 </div>
 
+<!-- cropper.js 적용하기 -->
 <link href="/node_modules/cropper/dist/cropper.min.css" rel="stylesheet">
 <script src="/node_modules/cropper/dist/cropper.min.js"></script>
 <script src="/node_modules/jquery-cropper/dist/jquery-cropper.min.js"></script>
@@ -172,7 +173,8 @@
                 let img = document.createElement("img");
                 img.id = 'new-profile';
                 img.src = e.target.result;
-                img.width = 250;
+                // img.width = 250;
+                img.setAttribute('width', '100%');
 
                 // $newProfileImage 영역에 새로 만든 img 태그를 추가함
                 $newProfileImage.html(img);

@@ -4,6 +4,8 @@ import com.global.account.UserAccount;
 import lombok.*;
 
 import javax.persistence.*;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +16,15 @@ import java.util.Set;
   @NamedAttributeNode("zones"),
   @NamedAttributeNode("managers"),
   @NamedAttributeNode("members")})
+@NamedEntityGraph(name="Study.withTagsAndManagers", attributeNodes = {
+  @NamedAttributeNode("tags"),
+  @NamedAttributeNode("managers")})
+@NamedEntityGraph(name="Study.withZonesAndManagers", attributeNodes = {
+  @NamedAttributeNode("zones"),
+  @NamedAttributeNode("managers")})
+@NamedEntityGraph(name="Study.withManagers", attributeNodes = {
+  @NamedAttributeNode("managers")})
+
 @Entity
 @Getter @Setter @EqualsAndHashCode(of="id")
 @Builder @AllArgsConstructor @NoArgsConstructor
@@ -91,5 +102,42 @@ public class Study {
   }
   public boolean isManager(UserAccount userAccount){
     return this.managers.contains(userAccount.getAccount());
+  }
+
+  public String getEncodedPath() {
+    return URLEncoder.encode(this.path, StandardCharsets.UTF_8);
+  }
+
+  public void publish() {
+    if(!this.closed && !this.published){
+      this.published = true;
+      this.publishedDateTime = LocalDateTime.now();
+    }else{
+      throw new RuntimeException("Study 가 이미 공개되었거나 종료되어서 공개할 수 없습니다.");
+    }
+  }
+
+  public void close() {
+    if(!this.closed && this.published){
+      this.closed = true;
+      this.closedDateTime = LocalDateTime.now();
+    }else{
+      throw new RuntimeException("Study 가 이미 종료했거나 공개상태가 아니라서 종료할 수 없습니다.");
+    }
+  }
+
+  public boolean canUpdateRecruiting() {
+    return this.published && this.recruitingUpdateDateTime ==
+      null || this.recruitingUpdateDateTime.isBefore(LocalDateTime.now().minusHours(1));
+  }
+
+  public void stopRecruit() {
+    if(canUpdateRecruiting()){
+      this.recruiting = false;
+
+      this.recruitingUpdateDateTime = LocalDateTime.now();
+    }else{
+      throw new RuntimeException("Study 가 공개되거나 멤버 모집을 시작한지 1 시간 이후에 멤버 모집을 멈출 수 있습니다.");
+    }
   }
 }
