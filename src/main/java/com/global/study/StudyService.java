@@ -12,7 +12,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import static com.global.study.form.StudyForm.VALID_PATH_PATTERN;
 
 @Service
 @RequiredArgsConstructor
@@ -34,6 +34,7 @@ public class StudyService {
   }
 
   public Study getStudyToUpdate(Account account, String path) {
+    // Study study = this.getStudy(path);
     Study study = studyRepository.findStudyWithManagersByPath(path);
     checkIfExistingStudy(path, study);
     // manager 가 아니면 study 정보를 수정할 수 없음
@@ -48,7 +49,7 @@ public class StudyService {
   }
 
   public Study getStudy(String path){
-    Study study = this.studyRepository.findByPath(path);
+    Study study = studyRepository.findByPath(path);
     checkIfExistingStudy(path, study);
     return study;
   }
@@ -113,10 +114,37 @@ public class StudyService {
   }
 
   public void startRecruit(Study study) {
-    study.canUpdateRecruiting();
+    study.startRecruit();
   }
 
   public void stopRecruit(Study study) {
-    //study.stopRecruit()
+    study.stopRecruit();
+  }
+
+  public boolean isValidPath(String newPath) {
+    if(newPath.matches(VALID_PATH_PATTERN)){
+      return false;
+    }
+    return !studyRepository.existsByPath(newPath);
+  }
+
+  public void updateStudyPath(Study study, String newPath) {
+    study.setPath(newPath);
+  }
+
+  public boolean isValidTitle(String newTitle) {
+    return newTitle.length() <= 50;
+  }
+
+  public void updateStudyTitle(Study study, String newTitle) {
+    study.setTitle(newTitle);
+  }
+
+  public void remove(Study study) {
+    if(study.isRemovable()){
+      studyRepository.delete(study);
+    }else{
+      throw new IllegalArgumentException("Study 를 삭제할 수 없습니다.");
+    }
   }
 }

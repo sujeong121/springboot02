@@ -6,11 +6,14 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
+import static com.global.study.form.StudyForm.VALID_PATH_PATTERN;
 @Data
 public class StudyForm {
+
+  public static final String VALID_PATH_PATTERN = "^[ㄱ-ㅎ가-힣-a-zA-Z0-9]{2,20}$";
   @NotBlank
   @Length(min=2, max=20)
-  @Pattern(regexp="^[ㄱ-ㅎ가-힣-a-zA-Z0-9]{2,20}$")
+  @Pattern(regexp=VALID_PATH_PATTERN)
   private String path;
 
   @NotBlank

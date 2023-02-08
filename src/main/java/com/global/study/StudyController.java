@@ -76,9 +76,7 @@ public class StudyController {
     }
     */
     Study study = studyService.getStudy(path);
-
     model.addAttribute(account);
-
     model.addAttribute(studyRepository.findByPath(path));
     return "study/view";
   }

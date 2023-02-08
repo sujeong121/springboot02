@@ -13,7 +13,7 @@
             th:action="@{/new-study}" th:object="${studyForm}" method="post" novalidate>
         <div class="form-group">
           <label for="path">Study URL</label>
-          <input id="path" type="text" th:field="*{path}"class="form-control"
+          <input id="path" type="text" th:field="*{path}" class="form-control"
                  placeholder="study-path" aria-describedby="pathHelp" required min="2" max="20">
           <small id="pathHelp" class="form-text text-muted">
             Study 홈주소에 사용할 내용입니다.
@@ -27,7 +27,7 @@
 
         <div class="form-group">
           <label for="title">Study 이름</label>
-          <input id="title" type="text" th:field="*{title}"class="form-control"
+          <input id="title" type="text" th:field="*{title}" class="form-control"
                  placeholder="Study 이름" aria-describedby="titleHelp" required max="50">
           <small id="titleHelp" class="form-text text-muted">
             Study 이름은 50 자 이내로 입력해 주세요.
@@ -39,7 +39,7 @@
 
         <div class="form-group">
           <label for="shortDescription">한 줄 소개</label>
-          <textarea id="shortDescription" type="text" th:field="*{shortDescription}"class="form-control"
+          <textarea id="shortDescription" type="text" th:field="*{shortDescription}" class="form-control"
                     placeholder="한 줄 소개" aria-describedby="shortDescriptionHelp" required maxlength="100"></textarea>
           <small id="shortDescriptionHelp" class="form-text text-muted">
             한 줄 소개는 100 자 이내로 입력해 주세요.
@@ -52,7 +52,7 @@
         <!-- summernote 에디터 사용하기 -->
         <div class="form-group">
           <label for="fullDescription">자세한 소개</label>
-          <textarea id="fullDescription" type="text" th:field="*{fullDescription}"class="form-control"
+          <textarea id="fullDescription" type="text" th:field="*{fullDescription}" class="form-control"
                     placeholder="자세한 소개" aria-describedby="fullDescriptionHelp" required></textarea>
           <small id="fullDescriptionHelp" class="form-text text-muted">
             Study 의 목표, 일정, 진행방식, 교재, 모집인원 등 자세한 내용을 적어 주세요.

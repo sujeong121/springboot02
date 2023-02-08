@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 // withAllRelations -> withAll 줄일 수 있음
-@NamedEntityGraph(name="Study.withAllRelations", attributeNodes = {
+@NamedEntityGraph(name="Study.withAll", attributeNodes = {
   @NamedAttributeNode("tags"),
   @NamedAttributeNode("zones"),
   @NamedAttributeNode("managers"),
@@ -59,10 +59,10 @@ public class Study {
   private String image;
 
   @ManyToMany
-  private Set<Tag> tags;
+  private Set<Tag> tags = new HashSet<>();
 
   @ManyToMany
-  private Set<Zone> zones;
+  private Set<Zone> zones = new HashSet<>();
 
   // Study 공개 시간
   private LocalDateTime publishedDateTime;
@@ -73,10 +73,10 @@ public class Study {
   // 인원 모집 개시와 중단 시간 설정
   // 모집 상태와 중단 상태를 너무 자주 변경하지 못하도록
   // 시간 제한
-  private LocalDateTime recruitingUpdateDateTime;
+  private LocalDateTime recruitingUpdatedDateTime;
 
   // 현재 모집 중인지 아닌지 여부
-  private  boolean recruiting;
+  private boolean recruiting;
 
   // Study 공개 여부
   private boolean published;
@@ -127,17 +127,33 @@ public class Study {
   }
 
   public boolean canUpdateRecruiting() {
-    return this.published && this.recruitingUpdateDateTime ==
-      null || this.recruitingUpdateDateTime.isBefore(LocalDateTime.now().minusHours(1));
+    return this.published && this.recruitingUpdatedDateTime ==
+      null || this.recruitingUpdatedDateTime.isBefore(LocalDateTime.now().minusHours(1));
+  }
+
+  public void startRecruit() {
+    // 멤버를 모집할 수 있는 경우
+    if (canUpdateRecruiting()){
+      this.recruiting = true;
+      this.recruitingUpdatedDateTime = LocalDateTime.now();
+    }else{
+      throw new RuntimeException("Study 가 공개되거나 멤버 모집을 시작한지 1 시간 이후에 멤버 모집을 시작할 수 있습니다.");
+    }
   }
 
   public void stopRecruit() {
     if(canUpdateRecruiting()){
       this.recruiting = false;
-
-      this.recruitingUpdateDateTime = LocalDateTime.now();
+      // Study 종료 시각 저장하기
+      this.recruitingUpdatedDateTime = LocalDateTime.now();
     }else{
       throw new RuntimeException("Study 가 공개되거나 멤버 모집을 시작한지 1 시간 이후에 멤버 모집을 멈출 수 있습니다.");
     }
   }
+
+  public boolean isRemovable(){
+    return !this.published;
+  }
+
+
 }

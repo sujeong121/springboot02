@@ -21,40 +21,147 @@
       <div th:replace="fragments.html :: message"></div>
       <div class="row">
         <h5 class="col-sm-12">Study 공개 / 종료</h5>
-        <form th:if="${!study.published && !study.colsed}" class="col-sm-12" action="#"
+        <form th:if="${!study.published && !study.closed}" class="col-sm-12" action="#"
               th:action="@{'/study/' + ${study.getPath()} + '/settings/study/publish'}" method="post" novalidate>
           <div class="alert alert-info" role="alert">
-            Study 를 공개하시려면 버튼을 클릭하세요.<br>
-            소개, 배너 이미지, 주제, 활동지역을 등록했는지 확인하세요. <br>
-            Study 를 공개하시면 <br>
+            Study 를 공개하시려면 버튼을 클릭하세요.<br/>
+            소개, 배너 이미지, 주제, 활동지역을 등록했는지 확인하세요. <br/>
+            Study 를 공개하시면 주요 활동 지역과 주제에 관심 있는 회원들에게 알림을 전송합니다.<br/>
           </div>
           <div class="form-group">
             <button class="btn btn-outline-primary" type="submit" aria-describedby="submitHelp">Study 공개</button>
           </div>
         </form>
-        <form th:if="${!study.published && !study.colsed}" class="col-sm-12" action="#"
-              th:action="@{'/study/' + ${study.getPath()} + '/settings/study/publish'}" method="post" novalidate>
+        <form th:if="${!study.published && !study.closed}" class="col-sm-12" action="#"
+              th:action="@{'/study/' + ${study.getPath()} + '/settings/study/close'}" method="post" novalidate>
           <div class="alert alert-warning" role="alert">
-            Study 를 종료하시려면 버튼을 클릭하세요.<br>
-
+            Study 를 종료하시려면 버튼을 클릭하세요.<br/>
+            Study 를 종료하시면 팀원을 모집할 수 없고, Study 경로와 이름을 수정할 수 없습니다.<br/>
+            Study 활동 내역과 참여했던 팀원들의 기록은 유지됩니다.
           </div>
           <div class="form-group">
             <button class="btn btn-outline-warning" type="submit" aria-describedby="submitHelp">Study 종료</button>
           </div>
         </form>
-        <div th:if="${study.colsed}"class="col-sm-12 alert alert-info">
-          이 Study 는 <span class="date-time" th:text="${study.closedDateTime}"></span> 에 종료되었습니다.><br>
-
+        <div th:if="${study.closed}" class="col-sm-12 alert alert-info">
+          이 Study 는 <span class="date-time" th:text="${study.closedDateTime}"></span> 에 종료되었습니다.<br/>
+          Study 를 진행하시려면 Study 를 새로 만들어 주세요.<br/>
         </div>
       </div>
       <hr th:if="${!study.closed && !study.recruiting && study.published}"/>
       <div class="row" th:if="${!study.closed && !study.recruiting && study.published}">
+        <h5 class="col-sm-12">Study 멤버 모집</h5>
+        <form class="col-sm-12" action="#" th:action="@{'/study/' + ${study.getPath()} + '/settings/recruit/start'}"
+              method="post" novalidate>
+          <div class="alert alert-info" role="alert">
+            Study 멤버를 모집합니다.<br/>
+            정원이 초과될 경우 조기 마감을 할 수 있습니다.<br/>
+            모집 정보는 1 시간에 한 번 변경할 수 있습니다.
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-primary" type="submit" aria-describedby="submitHelp">
+              Study 모집 시작
+            </button>
+          </div>
+        </form>
+      </div>
+      <hr th:if="${!study.closed && study.recruiting && study.published}" />
+      <div class="row" th:if="${!study.closed && study.recruiting && study.published}">
         <h5 class="col-sm-12">Study 구성원 모집</h5>
+        <form class="col-sm-12" action="#" th:action="@{'/study/' + ${study.getPath()} + '/settings/recruit/stop'}"
+              method="post" novalidate>
+          <div class="alert alert-primary" role="alert">
+            Study 구성원 모집을 중단합니다. <br/>
+            구성원을 더 모집하게 되면 다시 모집을 시작합니다. <br/>
+            모집 정보는 1 시간에 한 번 변경할 수 있습니다.
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-primary" type="submit" aria-describedby="submitHelp">Study 모집 중단</button>
+          </div>
+        </form>
+      </div>
 
+      <hr th:if="${!study.closed}" />
+      <div class="row" th:if="${!study.closed}">
+        <h5 class="col-sm-12">Study 경로</h5>
+        <form class="col-sm-12 needs-validation" th:action="@{'/study/' + ${study.path} + '/settings/study/path'}"
+              method="post" novalidate>
+          <div class="alert alert-warning" role="alert">
+            Study 경로를 수정하면, 이전 경로는 사용할 수 없습니다.<br/>
+          </div>
+          <div class="form-group">
+            <input id="path" type="text" name="newPath" th:value="${study.path}" class="form-control"
+                   placeholder="study-path" aria-describedby="pathHelp" required>
+            <small id="pathHelp" class="form-text text-muted">
+              공백을 제외하고 문자, 숫자, 대시(-), 언더바(_)만 사용해서 3 자 이상 20 자 이내로 입력하세요.
+              경로는 Study 홈주소에 사용됩니다.  /study/<b>study-path</b>
+            </small>
+            <small class="invalid-feedback"> Study 경로를 입력해 주세요. </small>
+            <samll class="form-text text-danger" th:if="${studyPathError}" th:text="${studyPathError}">경로 오류 발생 !!!</samll>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-warning" type="submit" aria-describedby="submitHelp">경로 수정</button>
+          </div>
+        </form>
+      </div>
+      <hr th:if="${!study.closed}"/>
+
+      <div class="row" th:if="${!study.closed}">
+        <h5 class="col-12">Study 이름</h5>
+        <form class="needs-validation col-12" action="#"
+              th:action="@{'/study/' + ${study.path} + '/settings/study/title'}" method="post" novalidation>
+          <div class="alert alert-warning" role="alert">
+            Study 이름을 수정합니다.<br/>
+          </div>
+          <div class="form-group">
+            <label for="title">Study 이름</label>
+            <input id="title" type="text" name="newTitle" th:value="${study.title}" class="form-control"
+                   placeholder="Study 이름"  aria-describedby="titleHelp" required maxlength="50">
+            <small id="titleHelp" class="form-text text-muted">
+              Study 이름은 50 자 이내로 입력해 주세요.
+            </small>
+            <small class="invalid-feedback">Study 이름을 입력하세요.</small>
+            <small class="form-text text-danger" th:if="${studyTitleError}" th:text="${studyTitleError}">Study 이름 오류 !!!</small>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-primary" type="submit" aria-describedby="submitHelp">Study 이름 수정</button>
+          </div>
+        </form>
+      </div>
+      <hr/>
+
+      <div class="row" th:if="${study.isRemovable()}">
+        <h5 class="col-sm-12 text-danger">Study 삭제</h5>
+        <form class="col-sm-12" action="#" th:action="@{'/study/' + ${study.getPath()} + '/settings/study/remove'}"
+              method="post" novalidate>
+          <div class="alert alert-danger" role="alert">
+            Study 를 삭제하시면 해당 Study 에 관련된 모든 기록이 삭제되며 복구할 수 없습니다.<br/>
+            <b>아래에 해당하는 Study 는 자동으로 삭제됩니다.</b>
+            <ul>
+              <li>개설한지 일주일이 지난 비공개 Study</li>
+              <li>Study 공개 후에 한 달 동안 모임을 만들지 않은 경우</li>
+              <li>Study 공개 후에 모임을 만들지 않고 종료한 경우</li>
+            </ul>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-primary" type="submit" aria-describedby="submitHelp">Study 삭제</button>
+          </div>
+        </form>
+      </div>
+      <div class="row" th:if="${!study.isRemovable()}">
+        <h5 class="col-sm-12 text-danger">Study 삭제</h5>
+        <form class="col-sm-12" action="#" th:action="@{'/study/' + ${study.getPath()} + '/settings/study/remove'}"
+              method="post" novalidate>
+          <div class="alert alert-danger" role="alert">
+            현재 공개 중이거나 개설해서 모임을 했던 Study 는 삭제할 수 없습니다.
+          </div>
+          <div class="form-group">
+            <button class="btn btn-outline-danger" type="submit" aria-describedby="submitHelp" disabled>Study 삭제</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-
   <div th:replace="fragments.html :: footer"></div>
 </div>
 
@@ -63,6 +170,6 @@
         $('[data-toggle="tooltip"]').tooltip()
     });
 </script>
-
+<script th:replace="fragments.html :: form-validation"></script>
 </body>
 </html>
