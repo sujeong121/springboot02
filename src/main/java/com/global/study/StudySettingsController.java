@@ -41,6 +41,7 @@ public class StudySettingsController {
   private final ObjectMapper objectMapper;
   private final TagService tagService;
   private final ZoneRepository zoneRepository;
+  private final StudyRepository studyRepository;
 
   @GetMapping("/description")
   public String viewStudySetting(@CurrentUser Account account,
@@ -278,10 +279,11 @@ public class StudySettingsController {
   }
 
   @PostMapping("/study/remove")
-  public String removeStudy(@CurrentUser Account account,
-                            @PathVariable String path, Model model){
+  public String removeStudy(@CurrentUser Account account, @PathVariable String path){
     Study study = studyService.getStudyToUpdate(account, path);
     studyService.remove(study);
     return "redirect:/";
   }
+
+
 }

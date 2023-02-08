@@ -87,6 +87,9 @@ public class Study {
   // Banner 사용 여부
   private boolean useBanner;
 
+  // membersHashSet 에 저장된 account 객체 개수 저장하는 변수
+  private int memberCount;
+
   public void addManager(Account account) {
     this.managers.add(account);
   }
@@ -155,5 +158,14 @@ public class Study {
     return !this.published;
   }
 
+  public void addMember(Account account) {
+    // this.members 는 HashSet 임
+    this.getMembers().add(account);
+    this.memberCount++;
+  }
 
+  public void removeMember(Account account) {
+    this.getMembers().remove(account);
+    this.memberCount--;
+  }
 }
