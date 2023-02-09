@@ -11,7 +11,7 @@
 16393||-9223372036854775808|T|G
 16393||10|T|G
 16393||16394|T|G</Grants>
-      <IntrospectionStateNumber>687</IntrospectionStateNumber>
+      <IntrospectionStateNumber>781</IntrospectionStateNumber>
       <ServerVersion>12.13</ServerVersion>
       <StartupTime>1675043131</StartupTime>
       <TimeZones>true ACDT
@@ -815,7 +815,7 @@ false posixrules
 13018||10|C|G
 13018||-9223372036854775808|U|G
 13018||10|U|G</Grants>
-      <IntrospectionStateNumber>687</IntrospectionStateNumber>
+      <IntrospectionStateNumber>781</IntrospectionStateNumber>
       <ObjectId>16393</ObjectId>
       <OwnerName>postgres</OwnerName>
     </database>
@@ -4037,7 +4037,7 @@ false posixrules
     <schema id="246" parent="3" name="public">
       <Comment>standard public schema</Comment>
       <Current>1</Current>
-      <IntrospectionStateNumber>687</IntrospectionStateNumber>
+      <IntrospectionStateNumber>781</IntrospectionStateNumber>
       <ObjectId>2200</ObjectId>
       <StateNumber>276</StateNumber>
       <OwnerName>postgres</OwnerName>
@@ -4066,177 +4066,189 @@ false posixrules
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <table id="251" parent="246" name="persistent_logins">
+    <table id="251" parent="246" name="enrollment">
+      <ObjectId>16827</ObjectId>
+      <StateNumber>772</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>global1</OwnerName>
+    </table>
+    <table id="252" parent="246" name="event">
+      <ObjectId>16832</ObjectId>
+      <StateNumber>773</StateNumber>
+      <AccessMethodId>2</AccessMethodId>
+      <OwnerName>global1</OwnerName>
+    </table>
+    <table id="253" parent="246" name="persistent_logins">
       <ObjectId>16672</ObjectId>
       <StateNumber>632</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <table id="252" parent="246" name="study">
+    <table id="254" parent="246" name="study">
       <ObjectId>16716</ObjectId>
-      <StateNumber>662</StateNumber>
+      <StateNumber>727</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <table id="253" parent="246" name="study_managers">
+    <table id="255" parent="246" name="study_managers">
       <ObjectId>16724</ObjectId>
       <StateNumber>661</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <table id="254" parent="246" name="study_members">
+    <table id="256" parent="246" name="study_members">
       <ObjectId>16729</ObjectId>
       <StateNumber>663</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <table id="255" parent="246" name="study_tags">
+    <table id="257" parent="246" name="study_tags">
       <ObjectId>16734</ObjectId>
       <StateNumber>665</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <table id="256" parent="246" name="study_zones">
+    <table id="258" parent="246" name="study_zones">
       <ObjectId>16739</ObjectId>
       <StateNumber>667</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <table id="257" parent="246" name="tag">
+    <table id="259" parent="246" name="tag">
       <ObjectId>16677</ObjectId>
       <StateNumber>641</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <table id="258" parent="246" name="zone">
+    <table id="260" parent="246" name="zone">
       <ObjectId>16682</ObjectId>
       <StateNumber>643</StateNumber>
       <AccessMethodId>2</AccessMethodId>
       <OwnerName>global1</OwnerName>
     </table>
-    <column id="259" parent="248" name="id">
+    <column id="261" parent="248" name="id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>629</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="260" parent="248" name="bio">
+    <column id="262" parent="248" name="bio">
       <DasType>varchar(255)|0s</DasType>
       <Position>2</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="261" parent="248" name="email">
+    <column id="263" parent="248" name="email">
       <DasType>varchar(255)|0s</DasType>
       <Position>3</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="262" parent="248" name="email_check_token">
+    <column id="264" parent="248" name="email_check_token">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="263" parent="248" name="email_check_token_generated_at">
+    <column id="265" parent="248" name="email_check_token_generated_at">
       <DasType>timestamp|0s</DasType>
       <Position>5</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="264" parent="248" name="email_verified">
+    <column id="266" parent="248" name="email_verified">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>6</Position>
       <StateNumber>629</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="265" parent="248" name="joined_at">
+    <column id="267" parent="248" name="joined_at">
       <DasType>timestamp|0s</DasType>
       <Position>7</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="266" parent="248" name="location">
+    <column id="268" parent="248" name="location">
       <DasType>varchar(255)|0s</DasType>
       <Position>8</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="267" parent="248" name="nick_name">
+    <column id="269" parent="248" name="nick_name">
       <DasType>varchar(255)|0s</DasType>
       <Position>9</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="268" parent="248" name="occupation">
+    <column id="270" parent="248" name="occupation">
       <DasType>varchar(255)|0s</DasType>
       <Position>10</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="269" parent="248" name="password">
+    <column id="271" parent="248" name="password">
       <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="270" parent="248" name="profile_image">
+    <column id="272" parent="248" name="profile_image">
       <DasType>oid|0s</DasType>
       <Position>12</Position>
       <StateNumber>629</StateNumber>
       <TypeId>26</TypeId>
     </column>
-    <column id="271" parent="248" name="study_created_by_email">
+    <column id="273" parent="248" name="study_created_by_email">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>13</Position>
       <StateNumber>629</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="272" parent="248" name="study_created_by_web">
+    <column id="274" parent="248" name="study_created_by_web">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>14</Position>
       <StateNumber>629</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="273" parent="248" name="study_enrollment_result_by_email">
+    <column id="275" parent="248" name="study_enrollment_result_by_email">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>15</Position>
       <StateNumber>629</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="274" parent="248" name="study_enrollment_result_by_web">
+    <column id="276" parent="248" name="study_enrollment_result_by_web">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>16</Position>
       <StateNumber>629</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="275" parent="248" name="study_updated_by_email">
+    <column id="277" parent="248" name="study_updated_by_email">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>17</Position>
       <StateNumber>629</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="276" parent="248" name="study_updated_by_web">
+    <column id="278" parent="248" name="study_updated_by_web">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>18</Position>
       <StateNumber>629</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="277" parent="248" name="url">
+    <column id="279" parent="248" name="url">
       <DasType>varchar(255)|0s</DasType>
       <Position>19</Position>
       <StateNumber>629</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="278" parent="248" name="account_pkey">
+    <index id="280" parent="248" name="account_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16660</ObjectId>
@@ -4245,7 +4257,7 @@ false posixrules
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="279" parent="248" name="uk_q0uja26qgu1atulenwup9rxyr">
+    <index id="281" parent="248" name="uk_q0uja26qgu1atulenwup9rxyr">
       <ColNames>email</ColNames>
       <ObjectId>16690</ObjectId>
       <StateNumber>636</StateNumber>
@@ -4255,7 +4267,7 @@ false posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <index id="280" parent="248" name="uk_8vluhc8jchp2km2mfydhbxplc">
+    <index id="282" parent="248" name="uk_8vluhc8jchp2km2mfydhbxplc">
       <ColNames>nick_name</ColNames>
       <ObjectId>16692</ObjectId>
       <StateNumber>638</StateNumber>
@@ -4265,38 +4277,38 @@ false posixrules
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="281" parent="248" name="account_pkey">
+    <key id="283" parent="248" name="account_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16661</ObjectId>
       <Primary>1</Primary>
       <StateNumber>629</StateNumber>
       <UnderlyingIndexId>16660</UnderlyingIndexId>
     </key>
-    <key id="282" parent="248" name="uk_q0uja26qgu1atulenwup9rxyr">
+    <key id="284" parent="248" name="uk_q0uja26qgu1atulenwup9rxyr">
       <ObjectId>16691</ObjectId>
       <StateNumber>636</StateNumber>
       <UnderlyingIndexId>16690</UnderlyingIndexId>
     </key>
-    <key id="283" parent="248" name="uk_8vluhc8jchp2km2mfydhbxplc">
+    <key id="285" parent="248" name="uk_8vluhc8jchp2km2mfydhbxplc">
       <ObjectId>16693</ObjectId>
       <StateNumber>638</StateNumber>
       <UnderlyingIndexId>16692</UnderlyingIndexId>
     </key>
-    <column id="284" parent="249" name="account_id">
+    <column id="286" parent="249" name="account_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>630</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="285" parent="249" name="tags_id">
+    <column id="287" parent="249" name="tags_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>630</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="286" parent="249" name="fkp3bn2fkyg67xosnh8srrff7vn">
+    <foreign-key id="288" parent="249" name="fkp3bn2fkyg67xosnh8srrff7vn">
       <ColNames>account_id</ColNames>
       <ObjectId>16701</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4306,7 +4318,7 @@ false posixrules
       <RefTableName>account</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <foreign-key id="287" parent="249" name="fk878dw6wexbmp9hm7kmxsquof3">
+    <foreign-key id="289" parent="249" name="fk878dw6wexbmp9hm7kmxsquof3">
       <ColNames>tags_id</ColNames>
       <ObjectId>16696</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4316,7 +4328,7 @@ false posixrules
       <RefTableName>tag</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <index id="288" parent="249" name="account_tags_pkey">
+    <index id="290" parent="249" name="account_tags_pkey">
       <ColNames>account_id
 tags_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -4326,28 +4338,28 @@ tags_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="289" parent="249" name="account_tags_pkey">
+    <key id="291" parent="249" name="account_tags_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16666</ObjectId>
       <Primary>1</Primary>
       <StateNumber>630</StateNumber>
       <UnderlyingIndexId>16665</UnderlyingIndexId>
     </key>
-    <column id="290" parent="250" name="account_id">
+    <column id="292" parent="250" name="account_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>631</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="291" parent="250" name="zones_id">
+    <column id="293" parent="250" name="zones_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>631</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="292" parent="250" name="fkkxfc41bm610t8ryufoijv5l0d">
+    <foreign-key id="294" parent="250" name="fkkxfc41bm610t8ryufoijv5l0d">
       <ColNames>account_id</ColNames>
       <ObjectId>16711</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4357,7 +4369,7 @@ tags_id</ColNames>
       <RefTableName>account</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <foreign-key id="293" parent="250" name="fkfylj4630irdkft4btnpdapvtu">
+    <foreign-key id="295" parent="250" name="fkfylj4630irdkft4btnpdapvtu">
       <ColNames>zones_id</ColNames>
       <ObjectId>16706</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4367,7 +4379,7 @@ tags_id</ColNames>
       <RefTableName>zone</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <index id="294" parent="250" name="account_zones_pkey">
+    <index id="296" parent="250" name="account_zones_pkey">
       <ColNames>account_id
 zones_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -4377,42 +4389,238 @@ zones_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="295" parent="250" name="account_zones_pkey">
+    <key id="297" parent="250" name="account_zones_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16671</ObjectId>
       <Primary>1</Primary>
       <StateNumber>631</StateNumber>
       <UnderlyingIndexId>16670</UnderlyingIndexId>
     </key>
-    <column id="296" parent="251" name="series">
+    <column id="298" parent="251" name="id">
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>769</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <column id="299" parent="251" name="accepted">
+      <DasType>boolean|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+      <StateNumber>769</StateNumber>
+      <TypeId>16</TypeId>
+    </column>
+    <column id="300" parent="251" name="attended">
+      <DasType>boolean|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+      <StateNumber>769</StateNumber>
+      <TypeId>16</TypeId>
+    </column>
+    <column id="301" parent="251" name="enrolled_at">
+      <DasType>timestamp|0s</DasType>
+      <Position>4</Position>
+      <StateNumber>769</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="302" parent="251" name="account_id">
+      <DasType>bigint|0s</DasType>
+      <Position>5</Position>
+      <StateNumber>769</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <column id="303" parent="251" name="event_id">
+      <DasType>bigint|0s</DasType>
+      <Position>6</Position>
+      <StateNumber>769</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <foreign-key id="304" parent="251" name="fki8amtgrnxh4an60dnnqjj8a1k">
+      <ColNames>account_id</ColNames>
+      <ObjectId>16840</ObjectId>
+      <RefColNames>id</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <StateNumber>772</StateNumber>
+      <RefTableId>16654</RefTableId>
+      <RefTableName>account</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <foreign-key id="305" parent="251" name="fklo10g4urj8p2je5m2aixypfr4">
+      <ColNames>event_id</ColNames>
+      <ObjectId>16845</ObjectId>
+      <RefColNames>id</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <StateNumber>773</StateNumber>
+      <RefTableId>16832</RefTableId>
+      <RefTableName>event</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <index id="306" parent="251" name="enrollment_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16830</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>769</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="307" parent="251" name="enrollment_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16831</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>769</StateNumber>
+      <UnderlyingIndexId>16830</UnderlyingIndexId>
+    </key>
+    <column id="308" parent="252" name="id">
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <column id="309" parent="252" name="create_date_time">
+      <DasType>timestamp|0s</DasType>
+      <Position>2</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="310" parent="252" name="description">
+      <DasType>oid|0s</DasType>
+      <Position>3</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>26</TypeId>
+    </column>
+    <column id="311" parent="252" name="end_date_time">
+      <DasType>timestamp|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="312" parent="252" name="end_enrollment_date_time">
+      <DasType>timestamp|0s</DasType>
+      <Position>5</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="313" parent="252" name="event_type">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>6</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="314" parent="252" name="limit_of_enrollment">
+      <DasType>integer|0s</DasType>
+      <Position>7</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>23</TypeId>
+    </column>
+    <column id="315" parent="252" name="start_date_time">
+      <DasType>timestamp|0s</DasType>
+      <Position>8</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <column id="316" parent="252" name="title">
+      <DasType>varchar(255)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>1043</TypeId>
+    </column>
+    <column id="317" parent="252" name="account_id">
+      <DasType>bigint|0s</DasType>
+      <Position>10</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <column id="318" parent="252" name="created_by_id">
+      <DasType>bigint|0s</DasType>
+      <Position>11</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <column id="319" parent="252" name="study_id">
+      <DasType>bigint|0s</DasType>
+      <Position>12</Position>
+      <StateNumber>770</StateNumber>
+      <TypeId>20</TypeId>
+    </column>
+    <foreign-key id="320" parent="252" name="fkqy7vf2v6cfnvo3nxba11fush5">
+      <ColNames>account_id</ColNames>
+      <ObjectId>16850</ObjectId>
+      <RefColNames>id</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <StateNumber>774</StateNumber>
+      <RefTableId>16654</RefTableId>
+      <RefTableName>account</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <foreign-key id="321" parent="252" name="fk6ksdqnga829jl9npgfr2n5623">
+      <ColNames>created_by_id</ColNames>
+      <ObjectId>16855</ObjectId>
+      <RefColNames>id</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <StateNumber>775</StateNumber>
+      <RefTableId>16654</RefTableId>
+      <RefTableName>account</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <foreign-key id="322" parent="252" name="fkb21n9vqs7iyptt7vx6v6s2e07">
+      <ColNames>study_id</ColNames>
+      <ObjectId>16860</ObjectId>
+      <RefColNames>id</RefColNames>
+      <RefColPositions>1</RefColPositions>
+      <StateNumber>776</StateNumber>
+      <RefTableId>16716</RefTableId>
+      <RefTableName>study</RefTableName>
+      <RefTableKind>table</RefTableKind>
+    </foreign-key>
+    <index id="323" parent="252" name="event_pkey">
+      <ColNames>id</ColNames>
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16838</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>770</StateNumber>
+      <Unique>1</Unique>
+      <AccessMethodId>403</AccessMethodId>
+    </index>
+    <key id="324" parent="252" name="event_pkey">
+      <NameSurrogate>1</NameSurrogate>
+      <ObjectId>16839</ObjectId>
+      <Primary>1</Primary>
+      <StateNumber>770</StateNumber>
+      <UnderlyingIndexId>16838</UnderlyingIndexId>
+    </key>
+    <column id="325" parent="253" name="series">
       <DasType>varchar(64)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>632</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="297" parent="251" name="last_used">
+    <column id="326" parent="253" name="last_used">
       <DasType>timestamp|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>632</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="298" parent="251" name="token">
+    <column id="327" parent="253" name="token">
       <DasType>varchar(64)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>632</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="299" parent="251" name="username">
+    <column id="328" parent="253" name="username">
       <DasType>varchar(64)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>4</Position>
       <StateNumber>632</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="300" parent="251" name="persistent_logins_pkey">
+    <index id="329" parent="253" name="persistent_logins_pkey">
       <ColNames>series</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16675</ObjectId>
@@ -4424,97 +4632,103 @@ zones_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="301" parent="251" name="persistent_logins_pkey">
+    <key id="330" parent="253" name="persistent_logins_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16676</ObjectId>
       <Primary>1</Primary>
       <StateNumber>632</StateNumber>
       <UnderlyingIndexId>16675</UnderlyingIndexId>
     </key>
-    <column id="302" parent="252" name="id">
+    <column id="331" parent="254" name="id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>654</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="303" parent="252" name="closed">
+    <column id="332" parent="254" name="closed">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>654</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="304" parent="252" name="closed_date_time">
+    <column id="333" parent="254" name="closed_date_time">
       <DasType>timestamp|0s</DasType>
       <Position>3</Position>
       <StateNumber>654</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="305" parent="252" name="full_description">
+    <column id="334" parent="254" name="full_description">
       <DasType>oid|0s</DasType>
       <Position>4</Position>
       <StateNumber>654</StateNumber>
       <TypeId>26</TypeId>
     </column>
-    <column id="306" parent="252" name="image">
+    <column id="335" parent="254" name="image">
       <DasType>oid|0s</DasType>
       <Position>5</Position>
       <StateNumber>654</StateNumber>
       <TypeId>26</TypeId>
     </column>
-    <column id="307" parent="252" name="path">
+    <column id="336" parent="254" name="path">
       <DasType>varchar(255)|0s</DasType>
       <Position>6</Position>
       <StateNumber>654</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="308" parent="252" name="published">
+    <column id="337" parent="254" name="published">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>7</Position>
       <StateNumber>654</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="309" parent="252" name="published_date_time">
+    <column id="338" parent="254" name="published_date_time">
       <DasType>timestamp|0s</DasType>
       <Position>8</Position>
       <StateNumber>654</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="310" parent="252" name="recruiting">
+    <column id="339" parent="254" name="recruiting">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>9</Position>
       <StateNumber>654</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="311" parent="252" name="recruiting_update_date_time">
+    <column id="340" parent="254" name="recruiting_update_date_time">
       <DasType>timestamp|0s</DasType>
       <Position>10</Position>
       <StateNumber>654</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="312" parent="252" name="short_description">
+    <column id="341" parent="254" name="short_description">
       <DasType>varchar(255)|0s</DasType>
       <Position>11</Position>
       <StateNumber>654</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="313" parent="252" name="title">
+    <column id="342" parent="254" name="title">
       <DasType>varchar(255)|0s</DasType>
       <Position>12</Position>
       <StateNumber>654</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="314" parent="252" name="use_banner">
+    <column id="343" parent="254" name="use_banner">
       <DasType>boolean|0s</DasType>
       <NotNull>1</NotNull>
       <Position>13</Position>
       <StateNumber>654</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <index id="315" parent="252" name="study_pkey">
+    <column id="344" parent="254" name="recruiting_updated_date_time">
+      <DasType>timestamp|0s</DasType>
+      <Position>14</Position>
+      <StateNumber>727</StateNumber>
+      <TypeId>1114</TypeId>
+    </column>
+    <index id="345" parent="254" name="study_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16722</ObjectId>
@@ -4523,7 +4737,7 @@ zones_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="316" parent="252" name="uk_tp0dsqbqe96klkxcn1cygxvtp">
+    <index id="346" parent="254" name="uk_tp0dsqbqe96klkxcn1cygxvtp">
       <ColNames>path</ColNames>
       <ObjectId>16744</ObjectId>
       <StateNumber>660</StateNumber>
@@ -4533,33 +4747,33 @@ zones_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="317" parent="252" name="study_pkey">
+    <key id="347" parent="254" name="study_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16723</ObjectId>
       <Primary>1</Primary>
       <StateNumber>654</StateNumber>
       <UnderlyingIndexId>16722</UnderlyingIndexId>
     </key>
-    <key id="318" parent="252" name="uk_tp0dsqbqe96klkxcn1cygxvtp">
+    <key id="348" parent="254" name="uk_tp0dsqbqe96klkxcn1cygxvtp">
       <ObjectId>16745</ObjectId>
       <StateNumber>660</StateNumber>
       <UnderlyingIndexId>16744</UnderlyingIndexId>
     </key>
-    <column id="319" parent="253" name="study_id">
+    <column id="349" parent="255" name="study_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>655</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="320" parent="253" name="managers_id">
+    <column id="350" parent="255" name="managers_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>655</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="321" parent="253" name="fkjpgd3hcqmvn69aa5efclbtxlv">
+    <foreign-key id="351" parent="255" name="fkjpgd3hcqmvn69aa5efclbtxlv">
       <ColNames>study_id</ColNames>
       <ObjectId>16751</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4569,7 +4783,7 @@ zones_id</ColNames>
       <RefTableName>study</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <foreign-key id="322" parent="253" name="fks0io7n0ix59jnmbypuot4ni14">
+    <foreign-key id="352" parent="255" name="fks0io7n0ix59jnmbypuot4ni14">
       <ColNames>managers_id</ColNames>
       <ObjectId>16746</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4579,7 +4793,7 @@ zones_id</ColNames>
       <RefTableName>account</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <index id="323" parent="253" name="study_managers_pkey">
+    <index id="353" parent="255" name="study_managers_pkey">
       <ColNames>study_id
 managers_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -4589,28 +4803,28 @@ managers_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="324" parent="253" name="study_managers_pkey">
+    <key id="354" parent="255" name="study_managers_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16728</ObjectId>
       <Primary>1</Primary>
       <StateNumber>655</StateNumber>
       <UnderlyingIndexId>16727</UnderlyingIndexId>
     </key>
-    <column id="325" parent="254" name="study_id">
+    <column id="355" parent="256" name="study_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>656</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="326" parent="254" name="members_id">
+    <column id="356" parent="256" name="members_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>656</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="327" parent="254" name="fk91e2fjvhd8t9u8m71jtj5jx0g">
+    <foreign-key id="357" parent="256" name="fk91e2fjvhd8t9u8m71jtj5jx0g">
       <ColNames>study_id</ColNames>
       <ObjectId>16761</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4620,7 +4834,7 @@ managers_id</ColNames>
       <RefTableName>study</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <foreign-key id="328" parent="254" name="fkaq9p14pwrcsffyw95j2wfcs00">
+    <foreign-key id="358" parent="256" name="fkaq9p14pwrcsffyw95j2wfcs00">
       <ColNames>members_id</ColNames>
       <ObjectId>16756</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4630,7 +4844,7 @@ managers_id</ColNames>
       <RefTableName>account</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <index id="329" parent="254" name="study_members_pkey">
+    <index id="359" parent="256" name="study_members_pkey">
       <ColNames>study_id
 members_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -4640,28 +4854,28 @@ members_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="330" parent="254" name="study_members_pkey">
+    <key id="360" parent="256" name="study_members_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16733</ObjectId>
       <Primary>1</Primary>
       <StateNumber>656</StateNumber>
       <UnderlyingIndexId>16732</UnderlyingIndexId>
     </key>
-    <column id="331" parent="255" name="study_id">
+    <column id="361" parent="257" name="study_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>657</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="332" parent="255" name="tags_id">
+    <column id="362" parent="257" name="tags_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>657</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="333" parent="255" name="fkfcda2rd30mutrwq7v7pdfe4ad">
+    <foreign-key id="363" parent="257" name="fkfcda2rd30mutrwq7v7pdfe4ad">
       <ColNames>study_id</ColNames>
       <ObjectId>16771</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4671,7 +4885,7 @@ members_id</ColNames>
       <RefTableName>study</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <foreign-key id="334" parent="255" name="fkjxrh4qj2v71ot7opn2334tdsb">
+    <foreign-key id="364" parent="257" name="fkjxrh4qj2v71ot7opn2334tdsb">
       <ColNames>tags_id</ColNames>
       <ObjectId>16766</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4681,7 +4895,7 @@ members_id</ColNames>
       <RefTableName>tag</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <index id="335" parent="255" name="study_tags_pkey">
+    <index id="365" parent="257" name="study_tags_pkey">
       <ColNames>study_id
 tags_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -4691,28 +4905,28 @@ tags_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="336" parent="255" name="study_tags_pkey">
+    <key id="366" parent="257" name="study_tags_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16738</ObjectId>
       <Primary>1</Primary>
       <StateNumber>657</StateNumber>
       <UnderlyingIndexId>16737</UnderlyingIndexId>
     </key>
-    <column id="337" parent="256" name="study_id">
+    <column id="367" parent="258" name="study_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>658</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="338" parent="256" name="zones_id">
+    <column id="368" parent="258" name="zones_id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>658</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <foreign-key id="339" parent="256" name="fkicj6wsqyb7xw7jhd0kmsrraxt">
+    <foreign-key id="369" parent="258" name="fkicj6wsqyb7xw7jhd0kmsrraxt">
       <ColNames>study_id</ColNames>
       <ObjectId>16781</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4722,7 +4936,7 @@ tags_id</ColNames>
       <RefTableName>study</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <foreign-key id="340" parent="256" name="fksjy30b9ag1wvjlb7h2k3f3rfm">
+    <foreign-key id="370" parent="258" name="fksjy30b9ag1wvjlb7h2k3f3rfm">
       <ColNames>zones_id</ColNames>
       <ObjectId>16776</ObjectId>
       <RefColNames>id</RefColNames>
@@ -4732,7 +4946,7 @@ tags_id</ColNames>
       <RefTableName>zone</RefTableName>
       <RefTableKind>table</RefTableKind>
     </foreign-key>
-    <index id="341" parent="256" name="study_zones_pkey">
+    <index id="371" parent="258" name="study_zones_pkey">
       <ColNames>study_id
 zones_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
@@ -4742,28 +4956,28 @@ zones_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="342" parent="256" name="study_zones_pkey">
+    <key id="372" parent="258" name="study_zones_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16743</ObjectId>
       <Primary>1</Primary>
       <StateNumber>658</StateNumber>
       <UnderlyingIndexId>16742</UnderlyingIndexId>
     </key>
-    <column id="343" parent="257" name="id">
+    <column id="373" parent="259" name="id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>633</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="344" parent="257" name="title">
+    <column id="374" parent="259" name="title">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>633</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="345" parent="257" name="tag_pkey">
+    <index id="375" parent="259" name="tag_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16680</ObjectId>
@@ -4772,7 +4986,7 @@ zones_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <index id="346" parent="257" name="uk_k5g3urrxw2ym0ls8vo6xfgs65">
+    <index id="376" parent="259" name="uk_k5g3urrxw2ym0ls8vo6xfgs65">
       <ColNames>title</ColNames>
       <ObjectId>16694</ObjectId>
       <StateNumber>640</StateNumber>
@@ -4782,46 +4996,46 @@ zones_id</ColNames>
       <CollationIds>100</CollationIds>
       <CollationParentNames>pg_catalog</CollationParentNames>
     </index>
-    <key id="347" parent="257" name="tag_pkey">
+    <key id="377" parent="259" name="tag_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16681</ObjectId>
       <Primary>1</Primary>
       <StateNumber>633</StateNumber>
       <UnderlyingIndexId>16680</UnderlyingIndexId>
     </key>
-    <key id="348" parent="257" name="uk_k5g3urrxw2ym0ls8vo6xfgs65">
+    <key id="378" parent="259" name="uk_k5g3urrxw2ym0ls8vo6xfgs65">
       <ObjectId>16695</ObjectId>
       <StateNumber>640</StateNumber>
       <UnderlyingIndexId>16694</UnderlyingIndexId>
     </key>
-    <column id="349" parent="258" name="id">
+    <column id="379" parent="260" name="id">
       <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StateNumber>634</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <column id="350" parent="258" name="city">
+    <column id="380" parent="260" name="city">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
       <StateNumber>634</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="351" parent="258" name="local_name_of_city">
+    <column id="381" parent="260" name="local_name_of_city">
       <DasType>varchar(255)|0s</DasType>
       <NotNull>1</NotNull>
       <Position>3</Position>
       <StateNumber>634</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="352" parent="258" name="province">
+    <column id="382" parent="260" name="province">
       <DasType>varchar(255)|0s</DasType>
       <Position>4</Position>
       <StateNumber>634</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <index id="353" parent="258" name="zone_pkey">
+    <index id="383" parent="260" name="zone_pkey">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16688</ObjectId>
@@ -4830,7 +5044,7 @@ zones_id</ColNames>
       <Unique>1</Unique>
       <AccessMethodId>403</AccessMethodId>
     </index>
-    <key id="354" parent="258" name="zone_pkey">
+    <key id="384" parent="260" name="zone_pkey">
       <NameSurrogate>1</NameSurrogate>
       <ObjectId>16689</ObjectId>
       <Primary>1</Primary>

@@ -2,6 +2,7 @@ package com.global.domain;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EqualsAndHashCode(of="id")
+@NoArgsConstructor
 public class Event {
 
   @Id @GeneratedValue
@@ -29,6 +30,7 @@ public class Event {
   private Account createdBy;
 
   // 모임 제목
+  @Column(nullable = false)
   private String title;
 
   // 모임 자세한 소개글
@@ -49,6 +51,7 @@ public class Event {
   private LocalDateTime endDateTime;
 
   // 참가 신청 제한 개수 : 등록 제한
+  @Column(nullable = true)
   private int limitOfEnrollment;
 
   // Enrollment 를 저장하는 List
