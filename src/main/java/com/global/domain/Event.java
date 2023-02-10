@@ -20,11 +20,7 @@ public class Event {
   private Long id;
 
   @ManyToOne
-  // @JoinColumn(name = "study_id")
   private Study study;
-
-  @ManyToOne
-  private Account account;
 
   @ManyToOne
   private Account createdBy;
@@ -38,7 +34,7 @@ public class Event {
   private String description;
 
   // 모임 개설한 시각
-  private LocalDateTime createDateTime;
+  private LocalDateTime createdDateTime;
 
   // 모임 등록 마감 시각 : 접수 마감
   private LocalDateTime endEnrollmentDateTime;
@@ -52,11 +48,11 @@ public class Event {
 
   // 참가 신청 제한 개수 : 등록 제한
   @Column(nullable = true)
-  private int limitOfEnrollment;
+  private Integer limitOfEnrollment;
 
   // Enrollment 를 저장하는 List
   @OneToMany(mappedBy = "event")
-  private List<Enrollment> enrollmentList = new ArrayList<>();
+  private List<Enrollment> enrollments = new ArrayList<>();
 
   @Enumerated(EnumType.STRING)
   private EventType eventType;

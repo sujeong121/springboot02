@@ -390,5 +390,17 @@
         });
     </script>
 
+  <script th:fragment="date-time">
+    <script src="/node_modules/moment/min/moment-with-locales.js"></script>
+    <script type="application/javascript">
+      $(function(){
+          moment.local('ko');
+          $(".date-time").text(function(index, dateTime){
+             return moment(dateTime, "YYYY-MM-DD`T`hh:mm").format('LLL');
+          });
+      });
+    </script>
+  </script>
+
 </body>
 </html>

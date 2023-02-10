@@ -15,11 +15,15 @@ import java.time.LocalDateTime;
 public class EventService {
 
   private final EventRepository eventRepository;
-  public void createEvent(Event event, Study study, Account account) {
+  public Event createEvent(Event event, Study study, Account account) {
+    // 모임을 개설하는 사람
     event.setCreatedBy(account);
-    event.setCreateDateTime(LocalDateTime.now());
+    // 모임 개설 일시
+    event.setCreatedDateTime(LocalDateTime.now());
+    // 모임이 속한 Study
     event.setStudy(study);
 
 
+    return eventRepository.save(event);
   }
 }
